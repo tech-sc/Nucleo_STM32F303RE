@@ -2096,8 +2096,23 @@
   </configuration>
   <group>
     <name>APL</name>
+    <group>
+      <name>Driver</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\APL\Driver\BSP_LED.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\APL\Driver\TIMER_ms.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\APL_init.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\..\..\APL\APL_osRes.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\TIMms.c</name>
     </file>
   </group>
   <group>
@@ -2140,7 +2155,13 @@
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_cortex.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_rcc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_tim.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_utils.c</name>

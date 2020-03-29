@@ -101,7 +101,7 @@
         </option>
         <option>
           <name>OGBufferedTerminalOutput</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GenStdoutInterface</name>
@@ -187,6 +187,7 @@
           <name>CCDefines</name>
           <state>STM32F303xE</state>
           <state>USE_HAL_DRIVER</state>
+          <state>USE_FULL_LL_DRIVER</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -316,6 +317,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\APL</state>
+          <state>$PROJ_DIR$\..\..\APL\Driver</state>
           <state>$PROJ_DIR$\..\..\Boot</state>
           <state>$PROJ_DIR$\..\..\OS</state>
           <state>$PROJ_DIR$\..\..\OS\FreeRTOS\include</state>
@@ -1932,8 +1934,23 @@
   </configuration>
   <group>
     <name>APL</name>
+    <group>
+      <name>Driver</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\APL\Driver\BSP_LED.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\APL\Driver\TIMER_ms.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\APL_init.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\..\..\APL\APL_osRes.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\TIMms.c</name>
     </file>
   </group>
   <group>
@@ -1976,7 +1993,13 @@
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_cortex.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_rcc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_tim.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_utils.c</name>

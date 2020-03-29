@@ -20,6 +20,7 @@
 #include "stm32f3xx_ll_system.h"
 #include "stm32f3xx_ll_cortex.h"
 #include "OS.h"
+#include "BSP_LED.h"
 
 /**
  * @brief オンボードペリフェラル初期設定
@@ -27,6 +28,8 @@
  */
 __weak void BSP_init(void)
 {
+	/* LEDの初期設定 */
+	BSP_LED_init();
 }
 
 /**
@@ -52,9 +55,9 @@ void Error_Handler(void)
   */
 void SystemClock_Config(void)
 {
-    LL_FLASH_SetLatency(LL_FLASH_LATENCY_2);
+    LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
 
-    if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_2) {
+    if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_1) {
         Error_Handler();
     }
     LL_RCC_HSI_Enable();
@@ -62,7 +65,7 @@ void SystemClock_Config(void)
     while(LL_RCC_HSI_IsReady() != 1);
 
     LL_RCC_HSI_SetCalibTrimming(16);
-    LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_8, LL_RCC_PREDIV_DIV_1);
+    LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLL_MUL_6, LL_RCC_PREDIV_DIV_1);
     LL_RCC_PLL_Enable();
     /* Wait till PLL is ready */
     while(LL_RCC_PLL_IsReady() != 1);
@@ -74,10 +77,10 @@ void SystemClock_Config(void)
     /* Wait till System clock is ready */
     while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) ;
 
-    //LL_Init1msTick(64000000);
-    SystemCoreClock = configCPU_CLOCK_HZ;
-    LL_SYSTICK_SetClkSource(LL_SYSTICK_CLKSOURCE_HCLK);
+    SystemCoreClock = configCPU_CLOCK_HZ;    //48000000
     LL_SetSystemCoreClock(SystemCoreClock);
+    //LL_SYSTICK_SetClkSource(LL_SYSTICK_CLKSOURCE_HCLK);
+    LL_RCC_SetTIMClockSource(LL_RCC_TIM34_CLKSOURCE_PCLK1);
 }
 
 /**

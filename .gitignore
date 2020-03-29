@@ -1,0 +1,10 @@
+*.cout
+*.pbi
+*.lib
+CubeF3Drivers/CMSIS/Device/ST/STM32F3xx/Source/Templates/
+CubeF3Drivers/CMSIS/Device/ST/STM32F3xx/Include/
+CubeF3Drivers/CMSIS/Include/
+Builder/EWARM7.50/settings/
+Builder/EWARM7.50/Debug/
+Builder/EWARM7.50/Nucleo_STM32F303RE.dep
+Builder/EWARM7.50/Nucleo_STM32F303RE.ewd
