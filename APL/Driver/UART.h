@@ -1,13 +1,13 @@
 /**************************************************************************//**
  * @file	UART.h
- * @brief RS232CƒŒƒxƒ‹•ÏŠ·Œü‚¯UART§ŒäAPI.
+ * @brief RS232Cãƒ¬ãƒ™ãƒ«å¤‰æ›å‘ã‘UARTåˆ¶å¾¡API.
  *
  * @author  Teru
  * @date    2014/01/12
  * @version Rev1.02
- * @par •ÏX—š—ğ:
- * - Rev1.01: 2014/01/12: ‰ŠúƒŠƒŠ[ƒX”Å.
- * - Rev1.10: 2019/06/19: STM32 HALƒhƒ‰ƒCƒog—p.
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev1.01: 2014/01/12: åˆæœŸãƒªãƒªãƒ¼ã‚¹ç‰ˆ.
+ * - Rev1.10: 2019/06/19: STM32 HALãƒ‰ãƒ©ã‚¤ãƒä½¿ç”¨.
  *
  * @copyright 2014 Emb-se.com.
  */
@@ -18,22 +18,22 @@
 #include "semphr.h"
 
 /**
- * @page PAGE_UART UART§Œä.
+ * @page PAGE_UART UARTåˆ¶å¾¡.
  *
- * @section SEC1_UART UART§ŒäAPI.
- * |APIs     |‹@”\–¼Ì|
+ * @section SEC1_UART UARTåˆ¶å¾¡API.
+ * |APIs     |æ©Ÿèƒ½åç§°|
  * |:--------|:------ |
- * |UART_init() | UART‰Šúİ’è |
- * |UART_setMode() | Text/Binaryƒ‚[ƒhİ’è |
- * |UART_getMode() | ƒ‚[ƒh(Text/Binary)æ“¾ |
- * |UART_getchar() | ˆê•¶šo—Í |
- * |UART_putchar() | ˆê•¶š“ü—Í |
- * |UART_puts() | •¶š—ñ‰üs•t‚«o—Í |
- * |UART_putstr() | •¶š—ño—Í |
+ * |UART_init() | UARTåˆæœŸè¨­å®š |
+ * |UART_setMode() | Text/Binaryãƒ¢ãƒ¼ãƒ‰è¨­å®š |
+ * |UART_getMode() | ãƒ¢ãƒ¼ãƒ‰(Text/Binary)å–å¾— |
+ * |UART_getchar() | ä¸€æ–‡å­—å‡ºåŠ› |
+ * |UART_putchar() | ä¸€æ–‡å­—å…¥åŠ› |
+ * |UART_puts() | æ–‡å­—åˆ—æ”¹è¡Œä»˜ãå‡ºåŠ› |
+ * |UART_putstr() | æ–‡å­—åˆ—å‡ºåŠ› |
  */
 /**
- * @addtogroup GROUP_UART UART§Œä.
- * @brief UART§ŒäAPI‚ğ’ñ‹Ÿ‚·‚é.<br>
+ * @addtogroup GROUP_UART UARTåˆ¶å¾¡.
+ * @brief UARTåˆ¶å¾¡APIã‚’æä¾›ã™ã‚‹.<br>
  * @{
  */
 

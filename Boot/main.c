@@ -2,13 +2,13 @@
  * @file    main.c
  * @brief   STM32F303RE STM32Nucleo
  *
- * @mainpage STM32Nucleo STM32F303RE Œü‚¯ƒvƒƒWƒFƒNƒg
- * @brief   ‘g‚İƒVƒXƒeƒ€‹Zp‰ï‡—pƒvƒƒWƒFƒNƒg‚Å‚ ‚é.<br>
+ * @mainpage STM32Nucleo STM32F303RE å‘ã‘ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ
+ * @brief   çµ„è¾¼ã¿ã‚·ã‚¹ãƒ†ãƒ æŠ€è¡“ä¼šåˆç”¨ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã§ã‚ã‚‹.<br>
  *
- * @details STM32CubeF3ƒ‰ƒCƒuƒ‰ƒŠ‚ğg—p‚µ‚ÄÀ‘•‚·‚é.<br>
+ * @details STM32CubeF3ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ä½¿ç”¨ã—ã¦å®Ÿè£…ã™ã‚‹.<br>
  *
- * @par •ÏX—š—ğ:
- *	Rev0.01@2019/06/02@ƒeƒ“ƒvƒŒ[ƒgì¬<br>
+ * @par å¤‰æ›´å±¥æ­´:
+ *	Rev0.01ã€€2019/06/02ã€€ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä½œæˆ<br>
  * @par Copyright
  *	2014-19 Emb-se.com All rights reserved.
  */
@@ -23,17 +23,17 @@
 #include "BSP_LED.h"
 
 /**
- * @brief ƒIƒ“ƒ{[ƒhƒyƒŠƒtƒFƒ‰ƒ‹‰Šúİ’è
+ * @brief ã‚ªãƒ³ãƒœãƒ¼ãƒ‰ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«åˆæœŸè¨­å®š
  * @retval None
  */
 __weak void BSP_init(void)
 {
-	/* LED‚Ì‰Šúİ’è */
+	/* LEDã®åˆæœŸè¨­å®š */
 	BSP_LED_init();
 }
 
 /**
- * @brief ƒAƒvƒŠ‰Šúİ’è
+ * @brief ã‚¢ãƒ—ãƒªåˆæœŸè¨­å®š
  * @retval None
  */
 __weak void APL_init(void)
@@ -84,7 +84,7 @@ void SystemClock_Config(void)
 }
 
 /**
- * @brief   ƒvƒƒOƒ‰ƒ€ƒƒCƒ“
+ * @brief   ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒ¡ã‚¤ãƒ³
  * @param   None
  * @retval  None
  */

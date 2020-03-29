@@ -1,16 +1,16 @@
 /**
  * @file  TIMER_ms.h
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚Ì§ŒäAPI.
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®åˆ¶å¾¡API.
  * 
- * ƒ~ƒŠ•bƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚Ì§ŒäAPI‚ğ’ñ‹Ÿ‚·‚é.
+ * ãƒŸãƒªç§’ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®åˆ¶å¾¡APIã‚’æä¾›ã™ã‚‹.
  * 
  * @author      Teru
  * @date        2019/08/04
  * @version     Rev0.10
  * 
- * @par •ÏX—š—ğ:
- * - Rev0.01: 2019/06/27: V‹Kì¬
- * - Rev0.10: 2019/08/04: ‹@”\–¼iƒ^ƒCƒ}¨ƒ~ƒŠ•bƒ^ƒCƒ}j•ÏX
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev0.01: 2019/06/27: æ–°è¦ä½œæˆ
+ * - Rev0.10: 2019/08/04: æ©Ÿèƒ½åï¼ˆã‚¿ã‚¤ãƒâ†’ãƒŸãƒªç§’ã‚¿ã‚¤ãƒï¼‰å¤‰æ›´
  * 
  * @copyright   2019 Emb-se.com.
  */
@@ -21,38 +21,38 @@
 #include "stm32f3xx_ll_tim.h"
 
 /**
- * @page page_timer_ms ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰(ƒ~ƒŠ•b)§Œä.
+ * @page page_timer_ms ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©(ãƒŸãƒªç§’)åˆ¶å¾¡.
  *
- * @section sec1_timer_ms ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚É‚Â‚¢‚Ä.
- * - ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚ÍATIM4-ch1‚ğg—p‚·‚é.
- * - ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚ÌƒNƒƒbƒNƒ\[ƒX(APB1 Timer clock)‚ÍA“à•”ƒNƒƒbƒN 48MHz‚Å‚ ‚é.
- * - ‰Šúİ’è‚É‚ÄAT=1/(48MHz/9600)=0.0002=0.2msec‚Æ‚·‚é.
+ * @section sec1_timer_ms ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã«ã¤ã„ã¦.
+ * - ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã¯ã€TIM4-ch1ã‚’ä½¿ç”¨ã™ã‚‹.
+ * - ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®ã‚¯ãƒ­ãƒƒã‚¯ã‚½ãƒ¼ã‚¹(APB1 Timer clock)ã¯ã€å†…éƒ¨ã‚¯ãƒ­ãƒƒã‚¯ 48MHzã§ã‚ã‚‹.
+ * - åˆæœŸè¨­å®šã«ã¦ã€T=1/(48MHz/9600)=0.0002=0.2msecã¨ã™ã‚‹.
  *
- * @section sec2_api_timer_ms ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰§ŒäAPI.
- * | APIs              | ‹@”\–¼Ì    |
+ * @section sec2_api_timer_ms ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åˆ¶å¾¡API.
+ * | APIs              | æ©Ÿèƒ½åç§°    |
  * |:------------------ |:---------- |
- * | TIMER_ms_init()       | ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚Ì‰Šúİ’è |
- * | TIMER_ms_setCompReg() | ƒRƒ“ƒyƒAƒ}ƒbƒ`’lƒZƒbƒg |
- * | TIMER_ms_getTick()    | tickƒJƒEƒ“ƒ^æ“¾ |
- * | TIM4_IRQHandler()     | ƒRƒ“ƒyƒAƒ}ƒbƒ`Š„‚İƒnƒ“ƒhƒ‰ |
+ * | TIMER_ms_init()       | ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®åˆæœŸè¨­å®š |
+ * | TIMER_ms_setCompReg() | ã‚³ãƒ³ãƒšã‚¢ãƒãƒƒãƒå€¤ã‚»ãƒƒãƒˆ |
+ * | TIMER_ms_getTick()    | tickã‚«ã‚¦ãƒ³ã‚¿å–å¾— |
+ * | TIM4_IRQHandler()     | ã‚³ãƒ³ãƒšã‚¢ãƒãƒƒãƒå‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ© |
  *
- * @section sec3_usage_timer_ms g—p•û–@.
- * - —\‚ßˆê“x‚¾‚¯ TIMER_init() ‚ğŒÄ‚Ño‚·.
+ * @section sec3_usage_timer_ms ä½¿ç”¨æ–¹æ³•.
+ * - äºˆã‚ä¸€åº¦ã ã‘ TIMER_init() ã‚’å‘¼ã³å‡ºã™.
  */
 /**
- * @addtogroup group_timer_ms ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰(ƒ~ƒŠ•b)§Œä.
- * @brief ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰§ŒäAPI‚ğ’ñ‹Ÿ‚·‚é.<br>
+ * @addtogroup group_timer_ms ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©(ãƒŸãƒªç§’)åˆ¶å¾¡.
+ * @brief ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åˆ¶å¾¡APIã‚’æä¾›ã™ã‚‹.<br>
  * @{
  */
 
-/// ƒ~ƒŠ•bƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰
+/// ãƒŸãƒªç§’ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
 #define TIMER_MS_DEV					TIM4
-/// ƒ~ƒŠ•bƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰IRQn
+/// ãƒŸãƒªç§’ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©IRQn
 #define TIMER_MS_IRQ					TIM4_IRQn
 
-/// tickƒŒƒWƒXƒ^Œ^(16bitƒJƒEƒ“ƒ^)
+/// tickãƒ¬ã‚¸ã‚¹ã‚¿å‹(16bitã‚«ã‚¦ãƒ³ã‚¿)
 typedef uint16_t    TICK16_t;
-/// ƒ^ƒCƒ}ƒJƒEƒ“ƒ^Œ^(ƒpƒ[ƒIƒ“‚©‚ç‚ÌŒo‰ßtick)
+/// ã‚¿ã‚¤ãƒã‚«ã‚¦ãƒ³ã‚¿å‹(ãƒ‘ãƒ¯ãƒ¼ã‚ªãƒ³ã‹ã‚‰ã®çµŒétick)
 typedef  union {
 	struct {
 		TICK16_t	lo;
@@ -66,27 +66,27 @@ typedef union {
 }TICK64_t;
 
 /**
- * @brief ƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚Ì‰Šúİ’è.
+ * @brief ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®åˆæœŸè¨­å®š.
  */
 extern void TIMER_ms_init( void );
 
 /**
- * @brief ƒRƒ“ƒyƒAƒ}ƒbƒ`’lƒZƒbƒg.
+ * @brief ã‚³ãƒ³ãƒšã‚¢ãƒãƒƒãƒå€¤ã‚»ãƒƒãƒˆ.
  */
 #define TIMER_ms_setCompReg( val )		LL_TIM_OC_SetCompareCH1( TIMER_MS_DEV, val )
 
 /**
- * @brief tickƒŒƒWƒXƒ^’l‚Ìæ“¾.
+ * @brief tickãƒ¬ã‚¸ã‚¹ã‚¿å€¤ã®å–å¾—.
  */
 #define TIMER_ms_getTick16()				LL_TIM_GetCounter( TIMER_MS_DEV )
 /**
- * @brief ƒ^ƒCƒ}ƒJƒEƒ“ƒ^(32,64bit)’l‚Ìæ“¾.
+ * @brief ã‚¿ã‚¤ãƒã‚«ã‚¦ãƒ³ã‚¿(32,64bit)å€¤ã®å–å¾—.
  */
 extern uint32_t  TIMER_ms_getTick32(void);
 extern uint64_t  TIMER_ms_getTick64(void);
 
 /**
- * @brief TIM4 Š„‚İƒnƒ“ƒhƒ‰.
+ * @brief TIM4 å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©.
  */
 extern void TIM4_IRQHandler(void);
 

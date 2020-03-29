@@ -1,16 +1,16 @@
 /**
  * @file  TIMER_ms.c
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚Ì§ŒäAPI.
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®åˆ¶å¾¡API.
  * 
- * ƒ~ƒŠ•bƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚Ì§ŒäAPI‚ğ’ñ‹Ÿ‚·‚é.
+ * ãƒŸãƒªç§’ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®åˆ¶å¾¡APIã‚’æä¾›ã™ã‚‹.
  * 
  * @author      Teru
  * @date        2019/08/04
  * @version     Rev0.10
  * 
- * @par •ÏX—š—ğ:
- * - Rev0.01: 2019/06/27: V‹Kì¬
- * - Rev0.10: 2019/08/04: ‹@”\–¼iƒ^ƒCƒ}¨ƒ~ƒŠ•bƒ^ƒCƒ}j•ÏX
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev0.01: 2019/06/27: æ–°è¦ä½œæˆ
+ * - Rev0.10: 2019/08/04: æ©Ÿèƒ½åï¼ˆã‚¿ã‚¤ãƒâ†’ãƒŸãƒªç§’ã‚¿ã‚¤ãƒï¼‰å¤‰æ›´
  * 
  * @copyright   2019 Emb-se.com.
  */
@@ -24,11 +24,11 @@
 #include "stm32f3xx_ll_cortex.h"
 #include "stm32f3xx_ll_bus.h"
 
-/// ƒ^ƒCƒ}ƒJƒEƒ“ƒ^64bit
+/// ã‚¿ã‚¤ãƒã‚«ã‚¦ãƒ³ã‚¿64bit
 static TICK64_t TIMER_cnt;
 
 /**
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚Ì‰Šúİ’è.
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®åˆæœŸè¨­å®š.
  */
 void TIMER_ms_init( void )
 {
@@ -64,15 +64,15 @@ void TIMER_ms_init( void )
 	TIMER_cnt.tick64 = 0;
 	LL_TIM_ClearFlag_CC1( TIMER_MS_DEV );
 	LL_TIM_ClearFlag_UPDATE( TIMER_MS_DEV );
-	/* ƒJƒEƒ“ƒ^ƒXƒ^[ƒg */
+	/* ã‚«ã‚¦ãƒ³ã‚¿ã‚¹ã‚¿ãƒ¼ãƒˆ */
 	LL_TIM_EnableIT_CC1( TIMER_MS_DEV );
     LL_TIM_EnableIT_UPDATE( TIMER_MS_DEV );
 	LL_TIM_EnableCounter( TIMER_MS_DEV );
 }
 
 /**
- * @brief 32ƒrƒbƒgTick’l‚Ìæ“¾.
- * @retval	32ƒrƒbƒgTick’l.
+ * @brief 32ãƒ“ãƒƒãƒˆTickå€¤ã®å–å¾—.
+ * @retval	32ãƒ“ãƒƒãƒˆTickå€¤.
  */
 uint32_t  TIMER_ms_getTick32(void)
 {
@@ -81,8 +81,8 @@ uint32_t  TIMER_ms_getTick32(void)
 }
 
 /**
- * @brief 64ƒrƒbƒgTick’l‚Ìæ“¾.
- * @retval	64ƒrƒbƒgTick’l.
+ * @brief 64ãƒ“ãƒƒãƒˆTickå€¤ã®å–å¾—.
+ * @retval	64ãƒ“ãƒƒãƒˆTickå€¤.
  */
 uint64_t  TIMER_ms_getTick64(void)
 {
@@ -91,8 +91,8 @@ uint64_t  TIMER_ms_getTick64(void)
 }
 
 /**
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}”­‰Îˆ—.
- * @param[in]	over =0/=1:ƒJƒEƒ“ƒ^Overflow.
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒç™ºç«å‡¦ç†.
+ * @param[in]	over =0/=1:ã‚«ã‚¦ãƒ³ã‚¿Overflow.
  */
 __weak void TIMER_ms_expire( int over )
 {
@@ -100,20 +100,20 @@ __weak void TIMER_ms_expire( int over )
 
 
 /**
- * @brief TIMER_MS_DEV Š„‚İƒnƒ“ƒhƒ‰.
+ * @brief TIMER_MS_DEV å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©.
  *
- * ƒ~ƒŠ•bƒ^ƒCƒ}‹@”\‚Ì”­‰Îˆ—‚ğƒR[ƒ‹‚·‚é.
+ * ãƒŸãƒªç§’ã‚¿ã‚¤ãƒæ©Ÿèƒ½ã®ç™ºç«å‡¦ç†ã‚’ã‚³ãƒ¼ãƒ«ã™ã‚‹.
  */
 void TIM4_IRQHandler(void)
 {
 	int		over;
     TIMER_cnt.tick32w.tick16w.lo = TIMER_ms_getTick16();
-	/* ƒRƒ“ƒyƒAƒ}ƒbƒ` */
+	/* ã‚³ãƒ³ãƒšã‚¢ãƒãƒƒãƒ */
 	if( LL_TIM_IsActiveFlag_CC1( TIMER_MS_DEV ) ) {
 		LL_TIM_ClearFlag_CC1( TIMER_MS_DEV );
 		over = 0;
 	}
-	/* ƒJƒEƒ“ƒ^ƒI[ƒo[ƒtƒ[ */
+	/* ã‚«ã‚¦ãƒ³ã‚¿ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ */
 	if( LL_TIM_IsActiveFlag_UPDATE( TIMER_MS_DEV ) ) {
 		LL_TIM_ClearFlag_UPDATE( TIMER_MS_DEV );
 		if( TIMER_cnt.tick32w.tick16w.hi == 0xFFFF ) {
@@ -124,7 +124,7 @@ void TIM4_IRQHandler(void)
 		}
 		over = 1;
 	}
-	/** @li ƒ^ƒCƒ}‹@”\‚Ì”­‰Îˆ— */
+	/** @li ã‚¿ã‚¤ãƒæ©Ÿèƒ½ã®ç™ºç«å‡¦ç† */
 	TIMER_ms_expire( over );
 }
 

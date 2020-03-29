@@ -1,14 +1,14 @@
 # FreeRTOS v7.6.0
 
-## FreeRTOS‚©‚çŽæ‚èž‚ñ‚¾ƒ\[ƒXƒtƒHƒ‹ƒ_
-- FreeRTOSV7.6.0\FreeRTOS\SourceƒtƒHƒ‹ƒ_”z‰º‚Ì‘Sƒtƒ@ƒCƒ‹
-- FreeRTOSV7.6.0\FreeRTOS\Source\includeƒtƒHƒ‹ƒ_”z‰º‚Ì‘Sƒtƒ@ƒCƒ‹
-- FreeRTOSV7.6.0\FreeRTOS\Source\portable\MemMangƒtƒHƒ‹ƒ_”z‰º‚Ì‘Sƒtƒ@ƒCƒ‹
-- FreeRTOSV7.6.0\FreeRTOS\Source\portable\IAR\ARM_CM4FƒtƒHƒ‹ƒ_”z‰º‚Ì‘Sƒtƒ@ƒCƒ‹
+## FreeRTOSã‹ã‚‰å–ã‚Šè¾¼ã‚“ã ã‚½ãƒ¼ã‚¹ãƒ•ã‚©ãƒ«ãƒ€
+- FreeRTOSV7.6.0\FreeRTOS\Sourceãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã®å…¨ãƒ•ã‚¡ã‚¤ãƒ«
+- FreeRTOSV7.6.0\FreeRTOS\Source\includeãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã®å…¨ãƒ•ã‚¡ã‚¤ãƒ«
+- FreeRTOSV7.6.0\FreeRTOS\Source\portable\MemMangãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã®å…¨ãƒ•ã‚¡ã‚¤ãƒ«
+- FreeRTOSV7.6.0\FreeRTOS\Source\portable\IAR\ARM_CM4Fãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã®å…¨ãƒ•ã‚¡ã‚¤ãƒ«
 - FreeRTOSConfig.h
-	FreeRTOSV7.6.0\FreeRTOS\Demo\CORTEX_M4F_STM32F407ZG-SKƒtƒHƒ‹ƒ_”z‰º‚©‚ç
-	ƒJƒŒƒ“ƒgƒtƒHƒ‹ƒ_‚ÉƒRƒs[
+	FreeRTOSV7.6.0\FreeRTOS\Demo\CORTEX_M4F_STM32F407ZG-SKãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã‹ã‚‰
+	ã‚«ãƒ¬ãƒ³ãƒˆãƒ•ã‚©ãƒ«ãƒ€ã«ã‚³ãƒ”ãƒ¼
 
-## “ÆŽ©¶¬ƒtƒ@ƒCƒ‹
+## ç‹¬è‡ªç”Ÿæˆãƒ•ã‚¡ã‚¤ãƒ«
 - hook.c
 - os.h

@@ -1,12 +1,12 @@
 /************************************************************************************//**
  * @file BSP_LED.c
- * @brief BluePillƒIƒ“ƒ{[ƒhLED§ŒäAPI
+ * @brief BluePillã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDåˆ¶å¾¡API
  *
  * @author  Teru
  * @date    2018/12/24
  * @version Rev0.10
- * @par •ÏX—š—ğ:
- * - Rev0.10: 2018/12/24: V‹Kì¬
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev0.10: 2018/12/24: æ–°è¦ä½œæˆ
  *
  * @copyright 2018 Emb-se.com. All rights reserved.
  */
@@ -17,11 +17,11 @@
 #include "BSP_LED.h"
 
 /**
- * @brief ƒIƒ“ƒ{[ƒhLED‚Ì‰Šúİ’è
+ * @brief ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®åˆæœŸè¨­å®š
  *
- * LED‚Íƒvƒ‹ƒ_ƒEƒ“İ’èŒãAinactive(1)‚Å‰Šú‰»‚·‚éB
- * @param ‚È‚µ
- * @return ‚È‚µ
+ * LEDã¯ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³è¨­å®šå¾Œã€inactive(1)ã§åˆæœŸåŒ–ã™ã‚‹ã€‚
+ * @param ãªã—
+ * @return ãªã—
  */
 void BSP_LED_init(void)
 {
@@ -30,7 +30,7 @@ void BSP_LED_init(void)
 	/* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOA_CLK_ENABLE();
 
-	/** @li LED‰Šúİ’è */
+	/** @li LEDåˆæœŸè¨­å®š */
 	BSP_LED_turnOFF();
 
 	/* Configure GPIO pin */

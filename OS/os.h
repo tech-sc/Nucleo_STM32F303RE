@@ -1,16 +1,16 @@
 /************************************************************************************//**
  * @file os.h
- * @brief OSƒCƒ“ƒ^ƒtƒF[ƒX’è‹`
+ * @brief OSã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹å®šç¾©
  *
  * @author		Teru
  * @date		2019/07/04
  * @version 	Rev0.02
  * @copyright	2019 Emb-se.com.
  *
- * @par •ÏX—š—ğ:
- * - Rev0.01: 2019/07/04: V‹Kì¬.
- * - Rev0.02: 2019/09/22: vSemaphoreCreateBinary¨xSemaphoreCreateBinary•ÏX.
- * @note OS‚ÍAFreeRTOS v7.6.0 ‚ğg—p‚·‚éB
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev0.01: 2019/07/04: æ–°è¦ä½œæˆ.
+ * - Rev0.02: 2019/09/22: vSemaphoreCreateBinaryâ†’xSemaphoreCreateBinaryå¤‰æ›´.
+ * @note OSã¯ã€FreeRTOS v7.6.0 ã‚’ä½¿ç”¨ã™ã‚‹ã€‚
  */
 #ifndef _OS_H_
 #define _OS_H_

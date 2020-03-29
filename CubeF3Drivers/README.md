@@ -1,24 +1,24 @@
 # CMSIS v1.10.0
 
-- CubeF3DriversƒtƒHƒ‹ƒ_
-	ƒIƒŠƒWƒiƒ‹‚ÌSTM32Cube_FW_F3_V1.10.0ƒtƒHƒ‹ƒ_‚Æ“¯“™ƒŒƒxƒ‹.
+- CubeF3Driversãƒ•ã‚©ãƒ«ãƒ€
+	ã‚ªãƒªã‚¸ãƒŠãƒ«ã®STM32Cube_FW_F3_V1.10.0ãƒ•ã‚©ãƒ«ãƒ€ã¨åŒç­‰ãƒ¬ãƒ™ãƒ«.
 
 - stm32f303xe_flash.icf
-	Device\ST\STM32F3xx\Source\Templates\iar\linkerƒtƒHƒ‹ƒ_‚©‚ç
-	CubeF3DriversƒtƒHƒ‹ƒ_”z‰º‚ÉƒRƒs[.
+	Device\ST\STM32F3xx\Source\Templates\iar\linkerãƒ•ã‚©ãƒ«ãƒ€ã‹ã‚‰
+	CubeF3Driversãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã«ã‚³ãƒ”ãƒ¼.
 
 - startup_stm32f303xe.s
-	Drivers\CMSIS\Device\ST\STM32F3xx\Source\Templates\iarƒtƒHƒ‹ƒ_‚©‚ç
-	CubeF3DriversƒtƒHƒ‹ƒ_”z‰º‚ÉƒRƒs[.
+	Drivers\CMSIS\Device\ST\STM32F3xx\Source\Templates\iarãƒ•ã‚©ãƒ«ãƒ€ã‹ã‚‰
+	CubeF3Driversãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã«ã‚³ãƒ”ãƒ¼.
 
 - system_stm32f3xx.c
-	Drivers\CMSIS\Device\ST\STM32F3xx\Source\TemplatesƒtƒHƒ‹ƒ_‚©‚ç
-	CubeF3DriversƒtƒHƒ‹ƒ_”z‰º‚ÉˆÚ“®.
+	Drivers\CMSIS\Device\ST\STM32F3xx\Source\Templatesãƒ•ã‚©ãƒ«ãƒ€ã‹ã‚‰
+	CubeF3Driversãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã«ç§»å‹•.
 
 - stm32_assert.h
-	Drivers\STM32F3xx_HAL_Driver\Inc\stm32_assert_template.h‚©‚ç
-	CubeF3DriversƒtƒHƒ‹ƒ_”z‰º‚ÉƒŠƒl[ƒ€ˆÚ“®.
+	Drivers\STM32F3xx_HAL_Driver\Inc\stm32_assert_template.hã‹ã‚‰
+	CubeF3Driversãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã«ãƒªãƒãƒ¼ãƒ ç§»å‹•.
 
 - tm32f3xx_hal_conf.h
-	Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_conf_template.h‚©‚ç
-	CubeF3DriversƒtƒHƒ‹ƒ_”z‰º‚ÉƒŠƒl[ƒ€ˆÚ“®.
+	Drivers\STM32F3xx_HAL_Driver\Inc\stm32f3xx_hal_conf_template.hã‹ã‚‰
+	CubeF3Driversãƒ•ã‚©ãƒ«ãƒ€é…ä¸‹ã«ãƒªãƒãƒ¼ãƒ ç§»å‹•.

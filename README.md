@@ -1,5 +1,5 @@
 # Nucleo_STM32F303RE
-## ƒrƒ‹ƒhŠÂ‹«
+## ãƒ“ãƒ«ãƒ‰ç’°å¢ƒ
 - IAR EWARM Version 7.50.03
-## “®ìÝ’è
+## å‹•ä½œè¨­å®š
 - SystemClock : 64MHz

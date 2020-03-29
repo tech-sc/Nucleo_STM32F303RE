@@ -25,7 +25,7 @@ enum {
 	MAX_MUTEXNUM,
 };
 
-// OSƒŠƒ\[ƒX‚ÌŠÇ—‚ÉŽg—p‚³‚ê‚éƒƒ‚ƒŠƒTƒCƒY
+// OSãƒªã‚½ãƒ¼ã‚¹ã®ç®¡ç†ã«ä½¿ç”¨ã•ã‚Œã‚‹ãƒ¡ãƒ¢ãƒªã‚µã‚¤ã‚º
 #define	osRESOURCEMNG_SZ	( 80+8+8 )
 #define	osTASKMNG_SZ		( MAX_TASKNUM  * osRESOURCEMNG_SZ )
 #define	osQUEMNG_SZ			( MAX_QUENUM   * osRESOURCEMNG_SZ )
@@ -34,7 +34,7 @@ enum {
 							+ osQUEMNG_SZ			\
 							+ osMUTEXMNG_SZ )
 
-// ƒ^ƒXƒN‚ÌƒXƒ^ƒbƒNEƒƒ‚ƒŠƒTƒCƒY
+// ã‚¿ã‚¹ã‚¯ã®ã‚¹ã‚¿ãƒƒã‚¯ãƒ»ãƒ¡ãƒ¢ãƒªã‚µã‚¤ã‚º
 #define	osIDLE_STACKSZ		256
 #define	osTMRSVC_STACKSZ	256
 #define	shell_STACKSZ		384
@@ -52,7 +52,7 @@ enum {
 							+ AplTemp_STACKSZ \
 							+ SwCtrl_STACKSZ )
 
-// ƒLƒ…[‚ÌƒRƒ“ƒeƒ“ƒcEƒƒ‚ƒŠƒTƒCƒY(ƒRƒ“ƒeƒ“ƒcƒTƒCƒY*ŒÂ”)
+// ã‚­ãƒ¥ãƒ¼ã®ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ãƒ»ãƒ¡ãƒ¢ãƒªã‚µã‚¤ã‚º(ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚µã‚¤ã‚º*å€‹æ•°)
 #define	osTMRSVC_QUESZ		( 12*10 +8 )
 #define	LOG_QUESZ			( 44*10 +8 )
 #define	AplTemp_QUESZ		( 16*3  +8 )
@@ -60,7 +60,7 @@ enum {
 							+ LOG_QUESZ \
 							+ AplTemp_QUESZ )
 
-// OSƒq[ƒvƒTƒCƒY
+// OSãƒ’ãƒ¼ãƒ—ã‚µã‚¤ã‚º
 #define osHEAP_SZ			( TOTAL_MNGSZ			\
 							+ TOTAL_STACKSZ 		\
 							+ TOTAL_QUESZ)

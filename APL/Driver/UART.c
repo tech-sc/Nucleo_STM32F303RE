@@ -1,13 +1,13 @@
 /************************************************************************************//**
  * @file UART.c
- * @brief RS232CƒŒƒxƒ‹•ÏŠ·Œü‚¯UART§ŒäAPI
+ * @brief RS232Cãƒ¬ãƒ™ãƒ«å¤‰æ›å‘ã‘UARTåˆ¶å¾¡API
  *
  * @author  Teru
  * @date    2014/01/12
  * @version Rev1.02
- * @par •ÏX—š—ğ:
- * - Rev1.01: 2014/01/12: ‰ŠúƒŠƒŠ[ƒX”Å.
- * - Rev1.10: 2019/06/19: STM32 HALƒhƒ‰ƒCƒog—p.
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev1.01: 2014/01/12: åˆæœŸãƒªãƒªãƒ¼ã‚¹ç‰ˆ.
+ * - Rev1.10: 2019/06/19: STM32 HALãƒ‰ãƒ©ã‚¤ãƒä½¿ç”¨.
  *
  * @copyright 2014 Emb-se.com.
  */
@@ -24,7 +24,7 @@
 #include "UART.h"
 
 
-#define UART				USART2		/**< g—p‚·‚éƒyƒŠƒtƒFƒ‰ƒ‹ */
+#define UART				USART2		/**< ä½¿ç”¨ã™ã‚‹ãƒšãƒªãƒ•ã‚§ãƒ©ãƒ« */
 
 #define UART_TX_PIN			GPIO_PIN_2
 #define UART_TX_GPIO_PORT	GPIOA
@@ -32,24 +32,24 @@
 #define UART_RX_GPIO_PORT	GPIOA
 
 
-/* HAL APIƒnƒ“ƒhƒ‹ */
+/* HAL APIãƒãƒ³ãƒ‰ãƒ« */
 static UART_HandleTypeDef	uart_HandleStruct = {0};
 
-/* UARTóM‘Ò‚¿ƒZƒ}ƒtƒH */
+/* UARTå—ä¿¡å¾…ã¡ã‚»ãƒãƒ•ã‚© */
 static xSemaphoreHandle	uart_RxSemaph;
 
-/* ’ÊMƒ‚[ƒh */
+/* é€šä¿¡ãƒ¢ãƒ¼ãƒ‰ */
 static uint16_t		uart_TransMode;
 
-/* UARTóMƒoƒbƒtƒ@ */
+/* UARTå—ä¿¡ãƒãƒƒãƒ•ã‚¡ */
 #define UART_RXBUFF_SIZE	16
 static uint8_t		uart_RxBuff[ UART_RXBUFF_SIZE ];
-static uint8_t		*uart_RxBuffWt_p;			/* ƒoƒbƒtƒ@‘‚«‚İƒ|ƒCƒ“ƒ^ */
-static uint8_t		*uart_RxBuffRd_p;			/* ƒoƒbƒtƒ@“Ç‚İo‚µƒ|ƒCƒ“ƒ^ */
+static uint8_t		*uart_RxBuffWt_p;			/* ãƒãƒƒãƒ•ã‚¡æ›¸ãè¾¼ã¿ãƒã‚¤ãƒ³ã‚¿ */
+static uint8_t		*uart_RxBuffRd_p;			/* ãƒãƒƒãƒ•ã‚¡èª­ã¿å‡ºã—ãƒã‚¤ãƒ³ã‚¿ */
 
 
 /**************************************************************************//**
- * @brief	UARTƒRƒ“ƒgƒ[ƒ‰‰Šúİ’è.
+ * @brief	UARTã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åˆæœŸè¨­å®š.
  * @retval	0	Success
  * @retval	-1	Error
  */
@@ -100,13 +100,13 @@ static int UART_config( void )
 }
 
 /**************************************************************************//**
- * @brief	UARTƒhƒ‰ƒCƒo‰Šúİ’è
+ * @brief	UARTãƒ‰ãƒ©ã‚¤ãƒåˆæœŸè¨­å®š
  * @retval	0	Success
  * @retval	-1	Error
  */
 int UART_init( void )
 {
-	/* “à•”ŠÇ—ƒf[ƒ^‰Šú‰» */
+	/* å†…éƒ¨ç®¡ç†ãƒ‡ãƒ¼ã‚¿åˆæœŸåŒ– */
 	vSemaphoreCreateBinary( uart_RxSemaph );
 	xSemaphoreTake( uart_RxSemaph, portMAX_DELAY );
 	uart_RxBuffWt_p = &uart_RxBuff[ 0 ];
@@ -115,12 +115,12 @@ int UART_init( void )
 	/* set default mode */
 	UART_setMode( ASCII_MODE );
 
-	/* UARTƒyƒŠƒtƒFƒ‰ƒ‹‰Šúİ’è */
+	/* UARTãƒšãƒªãƒ•ã‚§ãƒ©ãƒ«åˆæœŸè¨­å®š */
 	return UART_config();
 }
 
 /**************************************************************************//**
- * @brief	ƒ‚[ƒh‚ğİ’è‚·‚é
+ * @brief	ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã™ã‚‹
  * @param[in]	mode	ASCII_MODE/BINARY_MODE
  * @retval	0	Success
  * @retval	-1	Error
@@ -135,7 +135,7 @@ int UART_setMode( uint16_t mode )
 }
 
 /**************************************************************************//**
- * @brief	ƒ‚[ƒh‚ğæ“¾‚·‚é.
+ * @brief	ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹.
  * @retval	ASCII_MODE
  * @retval	BINARY_MODE
  */
@@ -172,9 +172,9 @@ void USART2_IRQHandler( void )
 }
 
 /**************************************************************************//**
- * @brief	UART‚©‚ç‚PƒoƒCƒgæ“¾‚·‚é.
- * @return	æ“¾‚µ‚½ƒf[ƒ^.
- * @note	UARTóMƒoƒbƒtƒ@‚©‚ç‚PƒoƒCƒgƒf[ƒ^‚ğæ‚èo‚·.
+ * @brief	UARTã‹ã‚‰ï¼‘ãƒã‚¤ãƒˆå–å¾—ã™ã‚‹.
+ * @return	å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿.
+ * @note	UARTå—ä¿¡ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ï¼‘ãƒã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šå‡ºã™.
  */
 int UART_getchar( void )
 {
@@ -192,9 +192,9 @@ int UART_getchar( void )
 }
 
 /**************************************************************************//**
- * @brief	UART‚É‚PƒoƒCƒgo—Í‚·‚é.
- * @param[in]	c	o—Í‚·‚éƒf[ƒ^.
- * @return	o—Í‚µ‚½ƒf[ƒ^.
+ * @brief	UARTã«ï¼‘ãƒã‚¤ãƒˆå‡ºåŠ›ã™ã‚‹.
+ * @param[in]	c	å‡ºåŠ›ã™ã‚‹ãƒ‡ãƒ¼ã‚¿.
+ * @return	å‡ºåŠ›ã—ãŸãƒ‡ãƒ¼ã‚¿.
  */
 int UART_putchar( char c )
 {
@@ -205,11 +205,11 @@ int UART_putchar( char c )
 }
 
 /**************************************************************************//**
- * @brief	UART‚Éˆø”ptr‚Ì•¶š—ñ‚ğo—Í‚·‚é
- * @param[in]	ptr	o—Í‚·‚é•¶š—ñ
- * @retval	0		o—Í¬Œ÷
- * @retval	-1		ƒGƒ‰[
- * @note	•¶š—ñI’[‚ğœ‚­•¶š—ñ‚ğo—Í‚·‚é
+ * @brief	UARTã«å¼•æ•°ptrã®æ–‡å­—åˆ—ã‚’å‡ºåŠ›ã™ã‚‹
+ * @param[in]	ptr	å‡ºåŠ›ã™ã‚‹æ–‡å­—åˆ—
+ * @retval	0		å‡ºåŠ›æˆåŠŸ
+ * @retval	-1		ã‚¨ãƒ©ãƒ¼
+ * @note	æ–‡å­—åˆ—çµ‚ç«¯ã‚’é™¤ãæ–‡å­—åˆ—ã‚’å‡ºåŠ›ã™ã‚‹
  */
 int UART_putstr( char *ptr )
 {
@@ -225,11 +225,11 @@ int UART_putstr( char *ptr )
 }
 
 /**************************************************************************//**
- * @brief	UART‚Éˆø”ptr‚Ì•¶š—ñ‚ğo—Í‚·‚é
- * @param[in]	ptr	o—Í‚·‚é•¶š—ñ
- * @retval	0		o—Í¬Œ÷
- * @retval	-1		ƒGƒ‰[
- * @note	•¶š—ñI’[‚Ì\0‚Í‰üsƒR[ƒh‚É•ÏŠ·‚µ‚Äo—Í‚·‚é
+ * @brief	UARTã«å¼•æ•°ptrã®æ–‡å­—åˆ—ã‚’å‡ºåŠ›ã™ã‚‹
+ * @param[in]	ptr	å‡ºåŠ›ã™ã‚‹æ–‡å­—åˆ—
+ * @retval	0		å‡ºåŠ›æˆåŠŸ
+ * @retval	-1		ã‚¨ãƒ©ãƒ¼
+ * @note	æ–‡å­—åˆ—çµ‚ç«¯ã®\0ã¯æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã«å¤‰æ›ã—ã¦å‡ºåŠ›ã™ã‚‹
  */
 int UART_puts( char *ptr )
 {

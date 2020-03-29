@@ -1,12 +1,12 @@
 /************************************************************************************//**
  * @file BSP_LED.h
- * @brief ƒIƒ“ƒ{[ƒhLED§ŒäAPI
+ * @brief ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDåˆ¶å¾¡API
  *
  * @author  Teru
  * @date    2018/12/24
  * @version Rev0.10
- * @par •ÏX—š—ğ:
- * - Rev0.10: 2018/12/24: V‹Kì¬
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev0.10: 2018/12/24: æ–°è¦ä½œæˆ
  *
  * @copyright 2018 Emb-se.com. All rights reserved.
  */
@@ -17,20 +17,20 @@
 #include "stm32f3xx_hal.h"
 
 /**
- * @page PAGE_BSP_LED ƒIƒ“ƒ{[ƒhLED§Œä
+ * @page PAGE_BSP_LED ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDåˆ¶å¾¡
  *
- * @section SEC1_BluePill_LED ƒIƒ“ƒ{[ƒhLED§ŒäAPI
- * |APIs     |‹@”\–¼Ì|
+ * @section SEC1_BluePill_LED ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDåˆ¶å¾¡API
+ * |APIs     |æ©Ÿèƒ½åç§°|
  * |:--------|:------ |
- * |BSP_LED_init() | ƒIƒ“ƒ{[ƒhLED‚Ì‰Šúİ’è |
- * |BSP_LED_turnON() | ƒIƒ“ƒ{[ƒhLED‚Ì“_“” |
- * |BSP_LED_turnOFF() | ƒIƒ“ƒ{[ƒhLED‚ÌÁ“” |
- * |BSP_LED_toggle() | ƒIƒ“ƒ{[ƒhLED‚ÌƒgƒOƒ‹o—Í |
+ * |BSP_LED_init() | ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®åˆæœŸè¨­å®š |
+ * |BSP_LED_turnON() | ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®ç‚¹ç¯ |
+ * |BSP_LED_turnOFF() | ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®æ¶ˆç¯ |
+ * |BSP_LED_toggle() | ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®ãƒˆã‚°ãƒ«å‡ºåŠ› |
  */
 /**
- * @addtogroup GROUP_BSP_LED ƒIƒ“ƒ{[ƒhLED§Œä
- * @brief ƒIƒ“ƒ{[ƒhLED§ŒäAPI‚ğ’ñ‹Ÿ‚·‚éB<br>
- * @details LED‚ÍAPA05‚Éƒvƒ‹ƒ_ƒEƒ“Ú‘±‚³‚ê‚Ä‚¢‚éB<br>
+ * @addtogroup GROUP_BSP_LED ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDåˆ¶å¾¡
+ * @brief ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDåˆ¶å¾¡APIã‚’æä¾›ã™ã‚‹ã€‚<br>
+ * @details LEDã¯ã€PA05ã«ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³æ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã€‚<br>
  * @{
  */
 
@@ -38,34 +38,34 @@
 #define LED_PIN			GPIO_PIN_5
 
 /**
- * @brief ƒIƒ“ƒ{[ƒhLED‚Ì‰Šúİ’è.
+ * @brief ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®åˆæœŸè¨­å®š.
  */
 extern void BSP_LED_init(void);
 
 /**
- * @brief ƒIƒ“ƒ{[ƒhLED‚Ì“_“”.
+ * @brief ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®ç‚¹ç¯.
  *
- * LED‚ğ“_“”‚·‚é.
- * @param ‚È‚µ.
- * @return ‚È‚µ.
+ * LEDã‚’ç‚¹ç¯ã™ã‚‹.
+ * @param ãªã—.
+ * @return ãªã—.
  */
 #define BSP_LED_turnON()		HAL_GPIO_WritePin( LED_POPT, LED_PIN, GPIO_PIN_SET )
 
 /**
- * @brief ƒIƒ“ƒ{[ƒhLED‚ÌÁ“”.
+ * @brief ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®æ¶ˆç¯.
  *
- * LED‚ğÁ“”‚·‚é.
- * @param ‚È‚µ.
- * @return ‚È‚µ.
+ * LEDã‚’æ¶ˆç¯ã™ã‚‹.
+ * @param ãªã—.
+ * @return ãªã—.
  */
 #define BSP_LED_turnOFF()		HAL_GPIO_WritePin( LED_POPT, LED_PIN, GPIO_PIN_RESET )
 
 /**
- * @brief ƒIƒ“ƒ{[ƒhLED‚ÌƒgƒOƒ‹o—Í.
+ * @brief ã‚ªãƒ³ãƒœãƒ¼ãƒ‰LEDã®ãƒˆã‚°ãƒ«å‡ºåŠ›.
  *
- * LED‚ğ“_“”‚Ü‚½‚ÍÁ“”‚ÉƒgƒOƒ‹‚·‚é.
- * @param ‚È‚µ.
- * @return ‚È‚µ.
+ * LEDã‚’ç‚¹ç¯ã¾ãŸã¯æ¶ˆç¯ã«ãƒˆã‚°ãƒ«ã™ã‚‹.
+ * @param ãªã—.
+ * @return ãªã—.
  */
 #define BSP_LED_toggle()		HAL_GPIO_TogglePin( LED_POPT, LED_PIN )
 

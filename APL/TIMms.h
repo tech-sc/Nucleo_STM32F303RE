@@ -1,17 +1,17 @@
 /**
  * @file  TIMms.h
- * @brief ƒ~ƒŠ•bƒI[ƒ_[ƒ^ƒCƒ}‹@”\.
+ * @brief ãƒŸãƒªç§’ã‚ªãƒ¼ãƒ€ãƒ¼ã‚¿ã‚¤ãƒæ©Ÿèƒ½.
  * 
- * ƒ~ƒŠ•b’PˆÊ‚Å—v‹‰Â”\‚Èƒ\ƒtƒgƒEƒFƒAƒ^ƒCƒ}‚ğAPL‚É’ñ‹Ÿ‚·‚é.
+ * ãƒŸãƒªç§’å˜ä½ã§è¦æ±‚å¯èƒ½ãªã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚¿ã‚¤ãƒã‚’APLã«æä¾›ã™ã‚‹.
  * 
  * @author      Teru
  * @date        2019/07/27
  * @version     Rev0.10
  * @copyright   2019 Emb-se.com.
  * 
- * @par •ÏX—š—ğ:
- * - Rev0.01: 2019/06/27: V‹Kì¬.
- * - Rev0.02: 2019/07/27: Doxygen‘Î‰.
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev0.01: 2019/06/27: æ–°è¦ä½œæˆ.
+ * - Rev0.02: 2019/07/27: Doxygenå¯¾å¿œ.
  * 
  * @copyright   2019 Emb-se.com.
  */
@@ -21,77 +21,77 @@
 #include "TIMER_ms.h"
 
 /**
- * @page TIMms_title ƒ^ƒCƒ}ƒ‰ƒCƒuƒ‰ƒŠ
+ * @page TIMms_title ã‚¿ã‚¤ãƒãƒ©ã‚¤ãƒ–ãƒ©ãƒª
  *
- * @section TIMms_api APIˆê——
- * | API–¼          | ‹@”\          |
+ * @section TIMms_api APIä¸€è¦§
+ * | APIå          | æ©Ÿèƒ½          |
  * |:-------------- |:------------- |
- * | TIMms_initTimer()  | ‰Šúİ’è   |
- * | TIMms_reqTimer()   | ƒ^ƒCƒ}—v‹ |
- * | TIMms_cancelTimer()| ƒ^ƒCƒ}æÁ |
+ * | TIMms_initTimer()  | åˆæœŸè¨­å®š   |
+ * | TIMms_reqTimer()   | ã‚¿ã‚¤ãƒè¦æ±‚ |
+ * | TIMms_cancelTimer()| ã‚¿ã‚¤ãƒå–æ¶ˆ |
  *
- * @section TIMms_usage g—p•û–@
- * - —\‚ßˆê“x‚¾‚¯ TIMms_initTimer() ‚ğŒÄ‚Ño‚·B
+ * @section TIMms_usage ä½¿ç”¨æ–¹æ³•
+ * - äºˆã‚ä¸€åº¦ã ã‘ TIMms_initTimer() ã‚’å‘¼ã³å‡ºã™ã€‚
  */
 /**
- * @addtogroup GROUP_TIMms ƒ~ƒŠ•bƒI[ƒ_[ƒ^ƒCƒ}‹@”\.
+ * @addtogroup GROUP_TIMms ãƒŸãƒªç§’ã‚ªãƒ¼ãƒ€ãƒ¼ã‚¿ã‚¤ãƒæ©Ÿèƒ½.
  * @{
  */
 
-/// ƒ^ƒCƒ}ƒJƒEƒ“ƒ^ƒŒƒWƒXƒ^Œ^(16bitƒJƒEƒ“ƒ^)
+/// ã‚¿ã‚¤ãƒã‚«ã‚¦ãƒ³ã‚¿ãƒ¬ã‚¸ã‚¹ã‚¿å‹(16bitã‚«ã‚¦ãƒ³ã‚¿)
 //typedef uint16_t    TIMCNT_t;
 
 /**
- * @brief ƒ^ƒCƒ}—v‹ƒf[ƒ^Œ^.
+ * @brief ã‚¿ã‚¤ãƒè¦æ±‚ãƒ‡ãƒ¼ã‚¿å‹.
  */
 typedef struct TIMms_t {
-    /// ”­‰Î‚Ü‚Å‚Ìc‚èTICK
+    /// ç™ºç«ã¾ã§ã®æ®‹ã‚ŠTICK
     int64_t     remain_tick;
-    /// ”­‰ÎƒR[ƒ‹ƒoƒbƒNŠÖ”.
+    /// ç™ºç«ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°.
     void   (*expire_cb)(void *hdl);
-    /// —v‹‚Ü‚½‚Í”­‰ÎƒŠƒXƒg.
+    /// è¦æ±‚ã¾ãŸã¯ç™ºç«ãƒªã‚¹ãƒˆ.
     struct TIMms_t *next_list;
-    /// —v‹ˆ—‚Ü‚½‚Í”­‰Îˆ—‚ÌTICK’l.
+    /// è¦æ±‚å‡¦ç†ã¾ãŸã¯ç™ºç«å‡¦ç†æ™‚ã®TICKå€¤.
     uint32_t    old_tick;
-    /// ƒIƒvƒVƒ‡ƒ“‹@”\ƒR[ƒh.
+    /// ã‚ªãƒ—ã‚·ãƒ§ãƒ³æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰.
     uint16_t    feature;
 }TIMms_t;
 
 /**
- * @brief ƒIƒvƒVƒ‡ƒ“‹@”\ƒR[ƒh.
+ * @brief ã‚ªãƒ—ã‚·ãƒ§ãƒ³æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰.
  */
 enum TIMms_OPTCD {
-	TIMms_FEATURE	= 0x5000,		/**< ƒ~ƒŠ•bƒI[ƒ_[ƒ^ƒCƒ}‹@”\ƒR[ƒh */
-	TIMms_STARTING	= 0x0100,		/**< ƒ^ƒCƒ}—v‹ˆ—’† */
-	TIMms_STOPING	= 0x0200,		/**< ƒ^ƒCƒ}’â~ˆ—’† */
+	TIMms_FEATURE	= 0x5000,		/**< ãƒŸãƒªç§’ã‚ªãƒ¼ãƒ€ãƒ¼ã‚¿ã‚¤ãƒæ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ */
+	TIMms_STARTING	= 0x0100,		/**< ã‚¿ã‚¤ãƒè¦æ±‚å‡¦ç†ä¸­ */
+	TIMms_STOPING	= 0x0200,		/**< ã‚¿ã‚¤ãƒåœæ­¢å‡¦ç†ä¸­ */
 	TIMms_ONESHORT	= 0x0010,		/**< OneShot */
-	TIMms_REPEAT	= 0x0020,		/**< ƒŠƒs[ƒg */
+	TIMms_REPEAT	= 0x0020,		/**< ãƒªãƒ”ãƒ¼ãƒˆ */
 };
 
-/// ƒ~ƒŠ•b¨tick•ÏŠ·. 1TICK=0.20msec
+/// ãƒŸãƒªç§’â†’tickå¤‰æ›. 1TICK=0.20msec
 #define MSEC_TO_TICK(ms)		(int64_t)((int64_t)ms * 5) +1
-/// tick¨ƒ~ƒŠ•b•ÏŠ·. 1TICK=0.20msec
+/// tickâ†’ãƒŸãƒªç§’å¤‰æ›. 1TICK=0.20msec
 #define TICK_TO_MSEC(tick)		(int32_t)(tick / 5)
 
 #define TIMms_getTick()     TIMER_ms_getTick32()
 
 /**
- * @brief ‰Šúİ’èAPI
+ * @brief åˆæœŸè¨­å®šAPI
  */
 extern void TIMms_initTimer( void );
 
 /**
- * @brief ƒ^ƒCƒ}—v‹API
+ * @brief ã‚¿ã‚¤ãƒè¦æ±‚API
  */
 extern void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_req );
 
 /**
- * @brief ƒ^ƒCƒ}æÁAPI
+ * @brief ã‚¿ã‚¤ãƒå–æ¶ˆAPI
  */
 extern void *TIMms_cancelTimer( TIMms_t *handle );
 
 /**
- * @brief ƒ^ƒCƒ}Š„‚İƒnƒ“ƒhƒ‰‚©‚çƒR[ƒ‹‚³‚ê‚é”­‰Îˆ—
+ * @brief ã‚¿ã‚¤ãƒå‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã‹ã‚‰ã‚³ãƒ¼ãƒ«ã•ã‚Œã‚‹ç™ºç«å‡¦ç†
  */
 extern void TIMms_expire( int over );
 

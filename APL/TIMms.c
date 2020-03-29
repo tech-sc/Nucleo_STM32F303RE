@@ -1,44 +1,44 @@
 /**
  * @file  TIMms.c
- * @brief ƒ~ƒŠ•bƒI[ƒ_[ƒ^ƒCƒ}‹@”\.
+ * @brief ãƒŸãƒªç§’ã‚ªãƒ¼ãƒ€ãƒ¼ã‚¿ã‚¤ãƒžæ©Ÿèƒ½.
  * 
- * ƒ~ƒŠ•b’PˆÊ‚Å—v‹‰Â”\‚Èƒ\ƒtƒgƒEƒFƒAƒ^ƒCƒ}‚ðAPL‚É’ñ‹Ÿ‚·‚é.
+ * ãƒŸãƒªç§’å˜ä½ã§è¦æ±‚å¯èƒ½ãªã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚¿ã‚¤ãƒžã‚’APLã«æä¾›ã™ã‚‹.
  * 
  * @author		Teru
  * @date		2019/07/27
  * @version		Rev0.10
  * @copyright	2019 Emb-se.com.
  * 
- * @par •ÏX—š—ð:
- * - Rev0.01: 2019/06/27: V‹Kì¬.
- * - Rev0.02: 2019/07/27: Doxygen‘Î‰ž’†.
+ * @par å¤‰æ›´å±¥æ­´:
+ * - Rev0.01: 2019/06/27: æ–°è¦ä½œæˆ.
+ * - Rev0.02: 2019/07/27: Doxygenå¯¾å¿œä¸­.
  * 
  * @copyright	2019 Emb-se.com.
  */
 /**
- * @addtogroup GROUP_TIMms ƒ~ƒŠ•bƒI[ƒ_[ƒ^ƒCƒ}‹@”\.
+ * @addtogroup GROUP_TIMms ãƒŸãƒªç§’ã‚ªãƒ¼ãƒ€ãƒ¼ã‚¿ã‚¤ãƒžæ©Ÿèƒ½.
  * @{
  */
 #include "TIMER_ms.h"
 #include "os.h"
 #include "TIMms.h"
-//#include "ExtLED.h"		///Œv‘ª—p.
+//#include "ExtLED.h"		///è¨ˆæ¸¬ç”¨.
 
-/// ƒ^ƒCƒ}—v‹ƒŠƒXƒgƒ|ƒCƒ“ƒ^
+/// ã‚¿ã‚¤ãƒžè¦æ±‚ãƒªã‚¹ãƒˆãƒã‚¤ãƒ³ã‚¿
 static TIMms_t		*TIMms_TopReq;
-/// ƒ^ƒCƒ}—v‹ƒŠƒXƒgƒ|ƒCƒ“ƒ^
+/// ã‚¿ã‚¤ãƒžè¦æ±‚ãƒªã‚¹ãƒˆãƒã‚¤ãƒ³ã‚¿
 static TIMms_t		*TIMms_TailReq;
-/// ƒ^ƒCƒ}”­‰ÎƒŠƒXƒgƒ|ƒCƒ“ƒ^
+/// ã‚¿ã‚¤ãƒžç™ºç«ãƒªã‚¹ãƒˆãƒã‚¤ãƒ³ã‚¿
 static TIMms_t		*TIMms_TopExpire;
 
-/// ŽŸ‰ñ”­‰Îtick’l
+/// æ¬¡å›žç™ºç«tickå€¤
 static TICK16_t		TIMms_NextExpire;
 
-/// ƒ^ƒCƒ}”­‰Îƒ^ƒXƒN‚ð‹N°‚·‚é‚½‚ß‚Ì“¯Šú‰»•Ï”
+/// ã‚¿ã‚¤ãƒžç™ºç«ã‚¿ã‚¹ã‚¯ã‚’èµ·åºŠã™ã‚‹ãŸã‚ã®åŒæœŸåŒ–å¤‰æ•°
 static osMutexHandle_t	TIMms_ExpireMutex;
 
-#if 0 //LowLevel‚ÌTIMER‚ÉˆÚs‚µ‚½.
-/// ƒpƒ[ƒIƒ“‚©‚ç‚ÌŒo‰ßtick
+#if 0 //LowLevelã®TIMERã«ç§»è¡Œã—ãŸ.
+/// ãƒ‘ãƒ¯ãƒ¼ã‚ªãƒ³ã‹ã‚‰ã®çµŒéŽtick
 static union {
 	struct {
 		TICK16_t	lo;
@@ -49,8 +49,8 @@ static union {
 #endif
 
 /**
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}”­‰Îˆ—ƒ^ƒXƒN.
- * @param[in]	arg	 –¢Žg—p.
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒžç™ºç«å‡¦ç†ã‚¿ã‚¹ã‚¯.
+ * @param[in]	arg	 æœªä½¿ç”¨.
  */
 static void TIMms_task( void *arg )
 {
@@ -71,21 +71,21 @@ static void TIMms_task( void *arg )
 }
 
 /**
- * @brief ŽŸ‰ñ”­‰ÎTICK’lƒZƒbƒg.
- * @param[in] tick	ŽŸ”­‰ÎTICK’l.
+ * @brief æ¬¡å›žç™ºç«TICKå€¤ã‚»ãƒƒãƒˆ.
+ * @param[in] tick	æ¬¡ç™ºç«TICKå€¤.
  */
 static void TIMms_setNextExpire( TICK16_t tick )
 {
-	/* ƒRƒ“ƒyƒAƒ}ƒbƒ`ƒŒƒWƒXƒ^‚ð•ÏX‚·‚é. */
+	/* ã‚³ãƒ³ãƒšã‚¢ãƒžãƒƒãƒãƒ¬ã‚¸ã‚¹ã‚¿ã‚’å¤‰æ›´ã™ã‚‹. */
 	TIMER_ms_setCompReg( tick );
 
 	TIMms_NextExpire = tick;
 }
 
 /**
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}‹@”\‚Ì‰ŠúÝ’èAPI
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒžæ©Ÿèƒ½ã®åˆæœŸè¨­å®šAPI
  *
- * ƒ~ƒŠ•bƒ^ƒCƒ}ƒRƒ“ƒgƒ[ƒ‰‚Ì‰ŠúÝ’è‹y‚Ñƒ^ƒCƒ}”­‰Îƒ^ƒXƒN‚Ì¶¬
+ * ãƒŸãƒªç§’ã‚¿ã‚¤ãƒžã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®åˆæœŸè¨­å®šåŠã³ã‚¿ã‚¤ãƒžç™ºç«ã‚¿ã‚¹ã‚¯ã®ç”Ÿæˆ
  */
 void TIMms_initTimer( void )
 {
@@ -93,41 +93,41 @@ void TIMms_initTimer( void )
 	int		retv;
 
 printf("%s\n", __FUNCTION__);
-	/* ƒ^ƒCƒ}‹N“® */
+	/* ã‚¿ã‚¤ãƒžèµ·å‹• */
 	TIMER_ms_init();
 
-	/* “à•”ŠÇ—ƒf[ƒ^‰Šú‰» */
+	/* å†…éƒ¨ç®¡ç†ãƒ‡ãƒ¼ã‚¿åˆæœŸåŒ– */
 	//TIMms_Tick.tick_l = 0;
 	TIMms_TopReq	 = NULL;
 	TIMms_TailReq	 = NULL;
 	TIMms_TopExpire	 = NULL;
-	TIMms_NextExpire = (TICK16_t)-1;	//Å‘å’lƒZƒbƒg
+	TIMms_NextExpire = (TICK16_t)-1;	//æœ€å¤§å€¤ã‚»ãƒƒãƒˆ
 
-	/* OSƒŠƒ\[ƒX¶¬ */
+	/* OSãƒªã‚½ãƒ¼ã‚¹ç”Ÿæˆ */
 	TIMms_ExpireMutex = osMutex_create();
 
-	/* ”­‰ÎƒR[ƒ‹ƒoƒbƒN—pƒ^ƒXƒN‚ð¶¬‚·‚é. */
+	/* ç™ºç«ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ç”¨ã‚¿ã‚¹ã‚¯ã‚’ç”Ÿæˆã™ã‚‹. */
 	retv = osTask_create( &TIMms_task, "TIMms", TIMms_STACKSZ/4,
 						NULL, TIMmsTASK_PRI | portPRIVILEGE_BIT, &handle );
 	configASSERT( retv == pdPASS );
 }
 
 /**
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}—v‹API
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒžè¦æ±‚API
  *
- * ƒ~ƒŠ•b’PˆÊ‚Ìƒ^ƒCƒ}—v‹‚ð’ñ‹Ÿ‚·‚éAPIŠÖ”‚Å‚ ‚é.
- * ”­‰Î‚ÍƒR[ƒ‹ƒoƒbƒN‚É‚Ä’Ê’m‚·‚é.
+ * ãƒŸãƒªç§’å˜ä½ã®ã‚¿ã‚¤ãƒžè¦æ±‚ã‚’æä¾›ã™ã‚‹APIé–¢æ•°ã§ã‚ã‚‹.
+ * ç™ºç«ã¯ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã«ã¦é€šçŸ¥ã™ã‚‹.
  *
- * @param[in]	time	   ƒ^ƒCƒ}ŽžŠÔBƒ~ƒŠ•b‚ÅŽw’è‚·‚é.
- * @param[in]	expire_cb  ”­‰ÎŽž‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”‚ðŽw’è‚·‚é.
- * @param[out]	p_req	   ƒ^ƒCƒ}—v‹ƒf[ƒ^—Ìˆæ‚ð“n‚·.ƒƒ“ƒo•Ï”‚É‚Í‰½‚àÝ’è‚·‚é•K—v‚Í‚È‚¢.
- *						   ’A‚µ”­‰Î‚·‚é–˜Aƒf[ƒ^—Ìˆæ‚ð•ÛŽ‚·‚éŽ–.
- * @retval	handle	ƒ^ƒCƒ}—v‹‚ª¬Œ÷‚·‚é‚ÆA‚»‚Ìƒ^ƒCƒ}ƒnƒ“ƒhƒ‹‚ð•Ô‚·.
- * @retval	NULL	ƒpƒ‰ƒ[ƒ^ƒGƒ‰[.
- * @pre		ˆø” time‚Í1msˆÈã‚Å‚ ‚é‚±‚Æ.
- *			ˆø” expire_cb‚ÍNULL‚Å‚È‚¢‚±‚Æ.
- *			ˆø” p_req‚ÍNULL‚Å‚È‚¢‚±‚Æ.
- * @post	ƒ^ƒCƒ}ŽæÁ‚Í•Ô‚µ‚½ƒnƒ“ƒhƒ‹‚Å’âŽ~‰Â”\‚Å‚ ‚é. ‚Ü‚½”­‰ÎŽž‚ÉŠY“–ƒnƒ“ƒhƒ‹‚ðƒpƒ‰ƒ[ƒ^‚Å’Ê’m‚·‚é.
+ * @param[in]	time	   ã‚¿ã‚¤ãƒžæ™‚é–“ã€‚ãƒŸãƒªç§’ã§æŒ‡å®šã™ã‚‹.
+ * @param[in]	expire_cb  ç™ºç«æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã‚’æŒ‡å®šã™ã‚‹.
+ * @param[out]	p_req	   ã‚¿ã‚¤ãƒžè¦æ±‚ãƒ‡ãƒ¼ã‚¿é ˜åŸŸã‚’æ¸¡ã™.ãƒ¡ãƒ³ãƒå¤‰æ•°ã«ã¯ä½•ã‚‚è¨­å®šã™ã‚‹å¿…è¦ã¯ãªã„.
+ *						   ä½†ã—ç™ºç«ã™ã‚‹è¿„ã€ãƒ‡ãƒ¼ã‚¿é ˜åŸŸã‚’ä¿æŒã™ã‚‹äº‹.
+ * @retval	handle	ã‚¿ã‚¤ãƒžè¦æ±‚ãŒæˆåŠŸã™ã‚‹ã¨ã€ãã®ã‚¿ã‚¤ãƒžãƒãƒ³ãƒ‰ãƒ«ã‚’è¿”ã™.
+ * @retval	NULL	ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚¨ãƒ©ãƒ¼.
+ * @pre		å¼•æ•° timeã¯1msä»¥ä¸Šã§ã‚ã‚‹ã“ã¨.
+ *			å¼•æ•° expire_cbã¯NULLã§ãªã„ã“ã¨.
+ *			å¼•æ•° p_reqã¯NULLã§ãªã„ã“ã¨.
+ * @post	ã‚¿ã‚¤ãƒžå–æ¶ˆã¯è¿”ã—ãŸãƒãƒ³ãƒ‰ãƒ«ã§åœæ­¢å¯èƒ½ã§ã‚ã‚‹. ã¾ãŸç™ºç«æ™‚ã«è©²å½“ãƒãƒ³ãƒ‰ãƒ«ã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§é€šçŸ¥ã™ã‚‹.
  */
 void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_req )
 {
@@ -163,16 +163,16 @@ void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_
 
 
 /**
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}ŽæÁAPI
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒžå–æ¶ˆAPI
  *
- * ƒ^ƒCƒ}—v‹‚ðŽæÁ‚·APIŠÖ”‚Å‚ ‚é.
- * API‚ÌŽg‚¢•û‚É‚æ‚Á‚Ä‚ÍŽæÁ‚Æ”­‰Î‚ª‚·‚êˆá‚¤‰Â”\«‚ª‚ ‚é‚Ì‚ÅŒÄ‚Ño‚µ‘¤‚Å‘Î‰ž‚·‚é‚±‚Æ.
+ * ã‚¿ã‚¤ãƒžè¦æ±‚ã‚’å–æ¶ˆã™APIé–¢æ•°ã§ã‚ã‚‹.
+ * APIã®ä½¿ã„æ–¹ã«ã‚ˆã£ã¦ã¯å–æ¶ˆã¨ç™ºç«ãŒã™ã‚Œé•ã†å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§å‘¼ã³å‡ºã—å´ã§å¯¾å¿œã™ã‚‹ã“ã¨.
  *
- * @param[in]	handle	ƒ^ƒCƒ}—v‹‚ðŽæÁ‚·ƒ^ƒCƒ}ƒnƒ“ƒhƒ‹.
- * @retval	!NULL	ŽæÁ‚ª¬Œ÷‚·‚é‚ÆAŽæÁ‚µ‚½ƒ^ƒCƒ}ƒnƒ“ƒhƒ‹‚ð•Ô‚·.
- * @retval	NULL	ƒpƒ‰ƒ[ƒ^ƒGƒ‰[.
- *					‚Ü‚½‚ÍƒGƒ“ƒgƒŠ‚³‚ê‚Ä‚È‚¢iŠù‚É”­‰Î‚µ‚½j.
- * @pre		ˆø”‚Ìhandle‚ÍNULL‚Å‚È‚¢‚±‚Æ.
+ * @param[in]	handle	ã‚¿ã‚¤ãƒžè¦æ±‚ã‚’å–æ¶ˆã™ã‚¿ã‚¤ãƒžãƒãƒ³ãƒ‰ãƒ«.
+ * @retval	!NULL	å–æ¶ˆãŒæˆåŠŸã™ã‚‹ã¨ã€å–æ¶ˆã—ãŸã‚¿ã‚¤ãƒžãƒãƒ³ãƒ‰ãƒ«ã‚’è¿”ã™.
+ * @retval	NULL	ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚¨ãƒ©ãƒ¼.
+ *					ã¾ãŸã¯ã‚¨ãƒ³ãƒˆãƒªã•ã‚Œã¦ãªã„ï¼ˆæ—¢ã«ç™ºç«ã—ãŸï¼‰.
+ * @pre		å¼•æ•°ã®handleã¯NULLã§ãªã„ã“ã¨.
  */
 void *TIMms_cancelTimer( TIMms_t *handle )
 {
@@ -197,8 +197,8 @@ void *TIMms_cancelTimer( TIMms_t *handle )
 }
 
 /**
- * @brief ƒ~ƒŠ•bƒ^ƒCƒ}Š„ž‚Ýƒnƒ“ƒhƒ‰‚©‚çƒR[ƒ‹‚³‚ê‚é”­‰Îˆ—.
- * @param[in]	over =0/=1:ƒJƒEƒ“ƒ^Overflow.
+ * @brief ãƒŸãƒªç§’ã‚¿ã‚¤ãƒžå‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã‹ã‚‰ã‚³ãƒ¼ãƒ«ã•ã‚Œã‚‹ç™ºç«å‡¦ç†.
+ * @param[in]	over =0/=1:ã‚«ã‚¦ãƒ³ã‚¿Overflow.
  */
 void TIMER_ms_expire( int over )
 {
@@ -209,7 +209,7 @@ void TIMER_ms_expire( int over )
 	uint32_t	temp_tick, now_tick;
 
 	if( over ){
-		// Œv‘ª—p
+		// è¨ˆæ¸¬ç”¨
 		//ExtLED1_toggle();
 	}
 
@@ -249,7 +249,7 @@ void TIMER_ms_expire( int over )
 	osExitCritical();
 
 	if( TIMms_TopExpire != NULL ){
-		/* ƒ^ƒXƒN‚ð‹N°‚·‚é */
+		/* ã‚¿ã‚¹ã‚¯ã‚’èµ·åºŠã™ã‚‹ */
 		osMutex_giveISR( TIMms_ExpireMutex, &dispatch );
 		portEND_SWITCHING_ISR( dispatch );
 	}
