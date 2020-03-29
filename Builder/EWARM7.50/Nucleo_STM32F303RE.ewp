@@ -315,6 +315,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\..\APL</state>
+          <state>$PROJ_DIR$\..\..\Boot</state>
+          <state>$PROJ_DIR$\..\..\OS</state>
+          <state>$PROJ_DIR$\..\..\OS\FreeRTOS\include</state>
+          <state>$PROJ_DIR$\..\..\OS\FreeRTOS\portable\ARM_CM3</state>
           <state>$PROJ_DIR$\..\..\CubeF3Drivers</state>
           <state>$PROJ_DIR$\..\..\CubeF3Drivers\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\CubeF3Drivers\CMSIS\Device\ST\STM32F3xx\Include</state>
@@ -576,7 +581,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\OS</state>
+          <state>$PROJ_DIR$\..\..\OS\FreeRTOS\portable\ARM_CM3</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1925,6 +1931,12 @@
     </settings>
   </configuration>
   <group>
+    <name>APL</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\APL_osRes.h</name>
+    </file>
+  </group>
+  <group>
     <name>Boot</name>
     <file>
       <name>$PROJ_DIR$\..\..\Boot\main.c</name>
@@ -1975,10 +1987,67 @@
       <name>$PROJ_DIR$\..\..\CubeF3Drivers\startup_stm32f303xe.s</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\CubeF3Drivers\stm32f3xx_it.c</name>
+      <name>$PROJ_DIR$\..\..\CubeF3Drivers\system_stm32f3xx.c</name>
+    </file>
+  </group>
+  <group>
+    <name>OS</name>
+    <group>
+      <name>FreeRTOS</name>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\include\FreeRTOS.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\include\list.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\include\portable.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\include\queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\include\semphr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\include\task.h</name>
+        </file>
+      </group>
+      <group>
+        <name>portable</name>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\portable\MemMang\heap_1.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\portable\ARM_CM3\port.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\portable\ARM_CM3\portasm.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\OS\FreeRTOS\portable\ARM_CM3\portmacro.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$\..\..\OS\FreeRTOS\list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\OS\FreeRTOS\queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\OS\FreeRTOS\tasks.c</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\..\..\OS\FreeRTOSConfig.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\CubeF3Drivers\system_stm32f3xx.c</name>
+      <name>$PROJ_DIR$\..\..\OS\hook.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\OS\os.h</name>
     </file>
   </group>
 </project>

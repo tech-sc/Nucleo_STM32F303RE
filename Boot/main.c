@@ -19,6 +19,7 @@
 #include "stm32f3xx_ll_utils.h"
 #include "stm32f3xx_ll_system.h"
 #include "stm32f3xx_ll_cortex.h"
+#include "OS.h"
 
 /**
  * @brief オンボードペリフェラル初期設定
@@ -74,7 +75,7 @@ void SystemClock_Config(void)
     while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) ;
 
     //LL_Init1msTick(64000000);
-    SystemCoreClock = 64000000;
+    SystemCoreClock = configCPU_CLOCK_HZ;
     LL_SYSTICK_SetClkSource(LL_SYSTICK_CLKSOURCE_HCLK);
     LL_SetSystemCoreClock(SystemCoreClock);
 }
@@ -94,5 +95,6 @@ void main( void )
 
     APL_init();
 
+	osKernel_start();
     for(;;);
 }
