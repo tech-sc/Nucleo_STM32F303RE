@@ -3,14 +3,17 @@
  * @brief OSインタフェース定義
  *
  * @author		Teru
- * @date		2019/07/04
- * @version 	Rev0.02
- * @copyright	2019 Emb-se.com.
+ * @date		2020/04/16
+ * @version 	Rev0.10
  *
  * @par 変更履歴:
  * - Rev0.01: 2019/07/04: 新規作成.
  * - Rev0.02: 2019/09/22: vSemaphoreCreateBinary→xSemaphoreCreateBinary変更.
+ * - Rev0.10: 2020/04/16: osTaskHandle_t→osTask_hなどハンドル型名変更.
+ *                        osRetVal→osErrorに型名変更.
  * @note OSは、FreeRTOS v7.6.0 を使用する。
+ *
+ * @copyright	2019-20 Emb-se.com.
  */
 #ifndef _OS_H_
 #define _OS_H_
@@ -41,10 +44,12 @@
 #define osMem_malloc			pvPortMalloc
 #define osMem_free				pvPortFree
 
-typedef xTaskHandle				osTaskHandle_t;
-typedef xQueueHandle			osQueHandle_t;
-typedef xSemaphoreHandle		osMutexHandle_t;
-typedef portBASE_TYPE			osRetVal_t;
+typedef xTaskHandle				osTask_h;
+typedef xQueueHandle			osQue_h;
+typedef xSemaphoreHandle		osMutex_h;
 
-#define osMAX_TIME				portMAX_DELAY
+typedef portBASE_TYPE			osError;
+
+#define osBLOCKING				portMAX_DELAY
+#define osPOLLING				(0)
 #endif //_OS_H_
