@@ -5,13 +5,13 @@
  * ミリ秒単位で要求可能なソフトウェアタイマをAPLに提供する.
  * 
  * @author      Teru
- * @date        2019/07/27
+ * @date        2019/12/21
  * @version     Rev0.10
- * @copyright   2019 Emb-se.com.
  * 
  * @par 変更履歴:
  * - Rev0.01: 2019/06/27: 新規作成.
  * - Rev0.02: 2019/07/27: Doxygen対応.
+ * - Rev0.10: 2019/12/21: TIMER_msドライバの変更に対応.
  * 
  * @copyright   2019 Emb-se.com.
  */

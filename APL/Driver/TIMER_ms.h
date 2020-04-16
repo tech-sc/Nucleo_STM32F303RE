@@ -5,12 +5,14 @@
  * ミリ秒タイマコントローラの制御APIを提供する.
  * 
  * @author      Teru
- * @date        2019/08/04
- * @version     Rev0.10
+ * @date        2019/12/21
+ * @version     Rev0.11
  * 
  * @par 変更履歴:
  * - Rev0.01: 2019/06/27: 新規作成
  * - Rev0.10: 2019/08/04: 機能名（タイマ→ミリ秒タイマ）変更
+ * - Rev0.11: 2019/12/21: タイマカウンタ64bit化
+ *                        1tick=0.25→0.20ミリ秒に変更
  * 
  * @copyright   2019 Emb-se.com.
  */
@@ -59,7 +61,7 @@ typedef  union {
 		TICK16_t	hi;
 	}tick16w;
 	uint32_t	tick32;
-} TICK32_t;
+}TICK32_t;
 typedef union {
 	TICK32_t  tick32w;
 	uint64_t  tick64;

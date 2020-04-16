@@ -5,13 +5,13 @@
  * ミリ秒単位で要求可能なソフトウェアタイマをAPLに提供する.
  * 
  * @author		Teru
- * @date		2019/07/27
+ * @date		2019/12/21
  * @version		Rev0.10
- * @copyright	2019 Emb-se.com.
  * 
  * @par 変更履歴:
  * - Rev0.01: 2019/06/27: 新規作成.
- * - Rev0.02: 2019/07/27: Doxygen対応中.
+ * - Rev0.02: 2019/07/27: Doxygen対応.
+ * - Rev0.10: 2019/12/21: TIMER_msドライバの変更に対応.
  * 
  * @copyright	2019 Emb-se.com.
  */
@@ -131,7 +131,7 @@ printf("%s\n", __FUNCTION__);
  */
 void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_req )
 {
-	uint16_t  tmp_tick;
+	TICK16_t  tmp_tick;
 
 	configASSERT(time > 0);
 	configASSERT(expire_cb != NULL);
@@ -156,7 +156,7 @@ void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_
 	tmp_tick  = p_req->old_tick;
 	tmp_tick += p_req->remain_tick;
 	if( tmp_tick < TIMms_NextExpire ){
-		TIMms_setNextExpire( (TICK16_t)tmp_tick );
+		TIMms_setNextExpire( tmp_tick );
 	}
 	return p_req;
 }
