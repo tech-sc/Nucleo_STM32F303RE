@@ -34,20 +34,20 @@
         <option>
           <name>Input variant</name>
           <version>3</version>
-          <state>7</state>
+          <state>0</state>
         </option>
         <option>
           <name>Input description</name>
-          <state>&#x6307;&#x5B9A;&#x5B50;n&#x306A;&#x3057;&#x3001;float&#x307e;&#x305F;&#x306F;long long&#x306A;&#x3057;&#x3001;&#x30B9;&#x30AD;&#x30e3;&#x30F3;&#x30BB;&#x30C3;&#x30C8;&#x306A;&#x3057;&#x3001;&#x4ee3;&#x5165;&#x6291;&#x6B62;&#x306A;&#x3057;&#x3001;&#x30De;&#x30eB;&#x30C1;&#x30D0;&#x30A4;&#x30C8;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x306A;&#x3057;&#x3002;</state>
+          <state>&#x30D5;&#x30A9;&#x30FC;&#x30De;&#x30C3;&#x30BF;&#x306e;&#x81eA;&#x52D5;&#x9078;&#x629e;&#x3002;</state>
         </option>
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>6</state>
+          <state>7</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>&#x6307;&#x5B9A;&#x5B50;a&#x307e;&#x305F;&#x306F;A&#x306A;&#x3057;&#x3001;&#x6307;&#x5B9A;&#x5B50;n&#x306A;&#x3057;&#x3001;float&#x307e;&#x305F;&#x306F;long long&#x306A;&#x3057;&#x3001;&#x30De;&#x30eB;&#x30C1;&#x30D0;&#x30A4;&#x30C8;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x306A;&#x3057;&#x3002;</state>
+          <state>&#x6307;&#x5B9A;&#x5B50;a,A&#x306A;&#x3057;&#x3001;&#x6307;&#x5B9A;&#x5B50;n&#x306A;&#x3057;&#x3001;float&#x304A;&#x3088;&#x3073;long long&#x306A;&#x3057;&#x3001;&#x30D5;&#x30e9;&#x30B0;&#x306A;&#x3057;&#x3002;</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -132,11 +132,11 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibThreads</name>
@@ -154,12 +154,12 @@
         <option>
           <name>FPU2</name>
           <version>0</version>
-          <state>4</state>
+          <state>0</state>
         </option>
         <option>
           <name>NrRegs</name>
           <version>0</version>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>NEON</name>
@@ -567,7 +567,7 @@
         </option>
         <option>
           <name>AMultibyteSupport</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>ALimitErrorsCheck</name>
@@ -584,7 +584,7 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\OS</state>
-          <state>$PROJ_DIR$\..\..\OS\FreeRTOS\portable\ARM_CM3</state>
+          <state>D:\UserFile\410_GitLocalRepo\Nucleo_STM32F303RE\OS\FreeRTOS\portable\ARM_CM3</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -618,7 +618,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state></state>
+          <state>Nucleo_STM32F303RE.srec</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1942,12 +1942,24 @@
       <file>
         <name>$PROJ_DIR$\..\..\APL\Driver\TIMER_ms.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\APL\Driver\UART.c</name>
+      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\..\..\APL\APL_init.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\APL\APL_osRes.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\ListEx.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\shell.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\SurveyTask.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\APL\TIMms.c</name>
@@ -1990,10 +2002,19 @@
       <group>
         <name>Src</name>
         <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_cortex.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rcc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_uart.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_rcc.c</name>

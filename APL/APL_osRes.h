@@ -3,25 +3,24 @@
 
 enum {
 	IDLE_TASKID = 0,
-	TMRSVC_TASKID,
-	SHELL_TASKID,
 	TIMms_TASKID,
 	LOG_TASKID,
+	shell_TASKID,
 	APL_INITTASKID,
-	AplTemp_TASKID,
+	SurveyA_TASKID,
+	SurveyB_TASKID,
 	MAX_TASKNUM,
 };
 enum {
-	TMRSVC_QUEID = 0,
-	LOG_QUEID,
-	AplTemp_QUEID,
+	LOG_QUEID = 0,
 	MAX_QUENUM,
 };
 enum {
-	UART_RXMUTEXID = 0,
-	TIMms_MUTEXID,
+	TIMms_MUTEXID = 0,
+	UART_RXMUTEXID,
 	APL_INITMUTEXID,
-	AplTemp_MUTEXID,
+	SurveyA_MUTEXID,
+	SurveyB_MUTEXID,
 	MAX_MUTEXNUM,
 };
 
@@ -36,29 +35,24 @@ enum {
 
 // タスクのスタック・メモリサイズ
 #define	osIDLE_STACKSZ		256
-#define	osTMRSVC_STACKSZ	256
-#define	shell_STACKSZ		384
-#define	TIMms_STACKSZ		256
+#define	TIMms_STACKSZ		384
 #define	LOG_STACKSZ			384
-#define	APLinit_STACKSZ		256
-#define	AplTemp_STACKSZ		256
-#define	SwCtrl_STACKSZ		256
+#define	shell_STACKSZ		384
+#define	APLinit_STACKSZ		384
+#define	SurveyA_STACKSZ		384
+#define	SurveyB_STACKSZ		384
 #define TOTAL_STACKSZ		( osIDLE_STACKSZ \
-							+ osTMRSVC_STACKSZ \
-							+ shell_STACKSZ \
 							+ TIMms_STACKSZ \
 							+ LOG_STACKSZ \
+							+ shell_STACKSZ \
 							+ APLinit_STACKSZ \
-							+ AplTemp_STACKSZ \
-							+ SwCtrl_STACKSZ )
+							+ SurveyA_STACKSZ \
+							+ SurveyB_STACKSZ )
 
 // キューのコンテンツ・メモリサイズ(コンテンツサイズ*個数)
-#define	osTMRSVC_QUESZ		( 12*10 +8 )
+//#define	osTMRSVC_QUESZ		( 12*10 +8 )
 #define	LOG_QUESZ			( 44*10 +8 )
-#define	AplTemp_QUESZ		( 16*3  +8 )
-#define TOTAL_QUESZ			( osTMRSVC_QUESZ \
-							+ LOG_QUESZ \
-							+ AplTemp_QUESZ )
+#define TOTAL_QUESZ			( LOG_QUESZ )
 
 // OSヒープサイズ
 #define osHEAP_SZ			( TOTAL_MNGSZ			\
@@ -66,11 +60,11 @@ enum {
 							+ TOTAL_QUESZ)
 
 #define TIMmsTASK_PRI		(configMAX_PRIORITIES -1)
-#define shellTASK_PRI		(configMAX_PRIORITIES -3)
-#define LOGTASK_PRI			(configMAX_PRIORITIES -4)
+#define LOGTASK_PRI			(configMAX_PRIORITIES -2)
+#define shellTASK_PRI		(configMAX_PRIORITIES -4)
 #define APLinitTASK_PRI		(configMAX_PRIORITIES -4)
-#define AplTempTASK_PRI		(configMAX_PRIORITIES -4)
-#define SwCtrlTASK_PRI		(configMAX_PRIORITIES -3)
+#define SurveyA_PRI			(configMAX_PRIORITIES -3)
+#define SurveyB_PRI			(configMAX_PRIORITIES -3)
 
 
 #endif // _APL_osRes.h_

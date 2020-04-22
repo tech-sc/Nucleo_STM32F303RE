@@ -2104,12 +2104,24 @@
       <file>
         <name>$PROJ_DIR$\..\..\APL\Driver\TIMER_ms.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\APL\Driver\UART.c</name>
+      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\..\..\APL\APL_init.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\APL\APL_osRes.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\ListEx.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\shell.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\APL\SurveyTask.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\APL\TIMms.c</name>
@@ -2152,10 +2164,19 @@
       <group>
         <name>Src</name>
         <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_cortex.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rcc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_uart.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\..\CubeF3Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_rcc.c</name>
