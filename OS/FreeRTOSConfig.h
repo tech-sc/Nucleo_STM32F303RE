@@ -157,6 +157,9 @@ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 header file. */
 #define configASSERT( x ) { if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); for( ;; ); }	}
 
+///タスクで使用する場合、スタックサイズに注意する事.
+// printf()極小でスタックを184byte消費する.
+// printf()小でスタックを232byte消費する.
 #define traceMALLOC( pvAddress, uiSize )	{ printf("malloc(%p,%u)\n", pvAddress, uiSize); }
 
 	
