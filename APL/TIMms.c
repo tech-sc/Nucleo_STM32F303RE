@@ -5,15 +5,16 @@
  * ミリ秒単位で要求可能なソフトウェアタイマをAPLに提供する.
  * 
  * @author		Teru
- * @date		2019/12/21
- * @version		Rev0.10
+ * @date		2020/04/21
+ * @version		Rev0.20
  * 
  * @par 変更履歴:
  * - Rev0.01: 2019/06/27: 新規作成.
  * - Rev0.02: 2019/07/27: Doxygen対応.
  * - Rev0.10: 2019/12/21: TIMER_msドライバの変更に対応.
+ * - Rev0.20: 2020/04/21: 双方向リスト管理に変更.
  * 
- * @copyright	2019 Emb-se.com.
+ * @copyright   2019-20 Emb-se.com.
  */
 /**
  * @addtogroup GROUP_TIMms ミリ秒オーダータイマ機能.
@@ -21,32 +22,22 @@
  */
 #include "TIMER_ms.h"
 #include "os.h"
+#include "ListEx.h"
 #include "TIMms.h"
+
 //#include "ExtLED.h"		///計測用.
 
 /// タイマ要求リストポインタ
-static TIMms_t		*TIMms_TopReq;
-/// タイマ要求リストポインタ
-static TIMms_t		*TIMms_TailReq;
+static ListHdr_t	TIMms_Request;
+
 /// タイマ発火リストポインタ
-static TIMms_t		*TIMms_TopExpire;
+static ListHdr_t	TIMms_Expire;
 
 /// 次回発火tick値
 static TICK16_t		TIMms_NextExpire;
 
 /// タイマ発火タスクを起床するための同期化変数
-static osMutexHandle_t	TIMms_ExpireMutex;
-
-#if 0 //LowLevelのTIMERに移行した.
-/// パワーオンからの経過tick
-static union {
-	struct {
-		TICK16_t	lo;
-		TICK16_t	hi;
-	}tick_w;
-	uint32_t	tick_l;
-} TIMms_Tick;
-#endif
+static osMutex_h		TIMms_ExpireMutex;
 
 /**
  * @brief ミリ秒タイマ発火処理タスク.
@@ -54,18 +45,20 @@ static union {
  */
 static void TIMms_task( void *arg )
 {
-	TIMms_t		**exp, *p;
+	TIMms_t		*p_exp, *p_temp;
+
+	/* OSリソース生成 */
+	TIMms_ExpireMutex = osMutex_create();
 
 	while( 1 ){
-		osMutex_take( TIMms_ExpireMutex, osMAX_TIME );
+		osMutex_take( TIMms_ExpireMutex, osBLOCKING );
 
-		if( TIMms_TopExpire != NULL ){
-			exp = &TIMms_TopExpire;
-			while( *exp != NULL ) {
-				p = *exp;
-				*exp = p->next_list;
-				(p->expire_cb)( p );
-			}
+		p_exp = (TIMms_t*)List_getNext( &TIMms_Expire );
+		while( p_exp != NULL ) {
+			List_remove( &TIMms_Expire, &p_exp->list );
+			p_temp = (TIMms_t*)List_getNext( &p_exp->list );
+			(p_exp->expire_cb)( p_exp );
+			p_exp = p_temp;
 		}
 	}
 }
@@ -89,22 +82,16 @@ static void TIMms_setNextExpire( TICK16_t tick )
  */
 void TIMms_initTimer( void )
 {
-	osTaskHandle_t	handle;
-	int		retv;
+	osTask_h	handle;
+	osError		retv;
 
-printf("%s\n", __FUNCTION__);
 	/* タイマ起動 */
 	TIMER_ms_init();
 
 	/* 内部管理データ初期化 */
-	//TIMms_Tick.tick_l = 0;
-	TIMms_TopReq	 = NULL;
-	TIMms_TailReq	 = NULL;
-	TIMms_TopExpire	 = NULL;
+	List_init( &TIMms_Request );
+	List_init( &TIMms_Expire );
 	TIMms_NextExpire = (TICK16_t)-1;	//最大値セット
-
-	/* OSリソース生成 */
-	TIMms_ExpireMutex = osMutex_create();
 
 	/* 発火コールバック用タスクを生成する. */
 	retv = osTask_create( &TIMms_task, "TIMms", TIMms_STACKSZ/4,
@@ -131,7 +118,7 @@ printf("%s\n", __FUNCTION__);
  */
 void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_req )
 {
-	TICK16_t  tmp_tick;
+	uint32_t  tmp_tick;
 
 	configASSERT(time > 0);
 	configASSERT(expire_cb != NULL);
@@ -140,23 +127,22 @@ void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_
 	p_req->old_tick	   = TIMER_ms_getTick32();
 	p_req->remain_tick = MSEC_TO_TICK(time);
 	p_req->expire_cb   = expire_cb;
-	p_req->next_list   = NULL;
 	p_req->feature	   = TIMms_FEATURE;
 
 	osEnterCritical();
-	if( TIMms_TailReq != NULL ){
-		TIMms_TailReq->next_list = p_req;
-		TIMms_TailReq = p_req;
-	}else{
-		TIMms_TailReq = p_req;
-		TIMms_TopReq  = p_req;
+	if( List_find( &TIMms_Request, &p_req->list ) != NULL ) {
+		osExitCritical();
+		return NULL;
 	}
+	List_add( &TIMms_Request, &p_req->list );
 	osExitCritical();
 
 	tmp_tick  = p_req->old_tick;
 	tmp_tick += p_req->remain_tick;
-	if( tmp_tick < TIMms_NextExpire ){
-		TIMms_setNextExpire( tmp_tick );
+	tmp_tick &= 0xffff;
+	if( tmp_tick <= TIMms_NextExpire ){
+		TIMms_NextExpire = tmp_tick;
+		TIMms_setNextExpire( TIMms_NextExpire );
 	}
 	return p_req;
 }
@@ -168,32 +154,20 @@ void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_
  * タイマ要求を取消すAPI関数である.
  * APIの使い方によっては取消と発火がすれ違う可能性があるので呼び出し側で対応すること.
  *
- * @param[in]	handle	タイマ要求を取消すタイマハンドル.
+ * @param[in]	p_req	タイマ要求を取消すタイマハンドル.
  * @retval	!NULL	取消が成功すると、取消したタイマハンドルを返す.
  * @retval	NULL	パラメータエラー.
  *					またはエントリされてない（既に発火した）.
  * @pre		引数のhandleはNULLでないこと.
  */
-void *TIMms_cancelTimer( TIMms_t *handle )
+void *TIMms_cancelTimer( TIMms_t *p_req )
 {
-	TIMms_t		**pre, *p;
+	configASSERT(p_req != NULL);
 
 	osEnterCritical();
-	pre = &TIMms_TopReq;
-	p = TIMms_TopReq;
-	while(p != NULL) {
-		if( p == handle ) {
-			if( TIMms_TailReq == handle ) {
-				TIMms_TailReq = (*pre)->next_list;
-			}
-			*pre = p->next_list;
-			break;
-		}
-		pre = &p->next_list;
-		p = p->next_list;
-	}
+	List_remove( &TIMms_Request, &p_req->list );
 	osExitCritical();
-	return p;
+	return p_req;
 }
 
 /**
@@ -203,9 +177,8 @@ void *TIMms_cancelTimer( TIMms_t *handle )
 void TIMER_ms_expire( int over )
 {
 	portBASE_TYPE	dispatch;
-	TIMms_t		**pre, *p;
-	TIMms_t		**exp;
-	TICK16_t	min_tick;
+	TIMms_t		*p_req, *p_temp;
+	uint32_t	min_tick;
 	uint32_t	temp_tick, now_tick;
 
 	if( over ){
@@ -214,41 +187,37 @@ void TIMER_ms_expire( int over )
 	}
 
 	dispatch  = pdFALSE;
-	min_tick = (TICK16_t)-1;	//set MAX
+	min_tick = (uint32_t)-1;	//set MAX
 	now_tick = TIMER_ms_getTick32();
 
 	osEnterCritical();
-	exp = &TIMms_TopExpire;
-	while( *exp != NULL ) {
-		*exp = (*exp)->next_list;
-	}
-	pre = &TIMms_TopReq;
-	p = TIMms_TopReq;
-	while(p != NULL) {
-        temp_tick = now_tick - p->old_tick;
+	p_req = (TIMms_t*)List_getNext( &TIMms_Request );
+	while( p_req != NULL ) {
+		temp_tick = now_tick - p_req->old_tick;
+		p_req->remain_tick -= temp_tick;
 
-		p->remain_tick -= temp_tick;
-		if( p->remain_tick <= 0 ) {
-			 *pre = p->next_list;
-			 p->next_list = NULL;
-			 *exp = p;
-			 exp = &p->next_list;
-			 p = *pre;
+		if( p_req->remain_tick <= 0 ) {
+			List_remove( &TIMms_Request, &p_req->list );
+			p_temp = (TIMms_t*)List_getNext( &p_req->list );
+			List_add( &TIMms_Expire, &p_req->list );
+			p_req = p_temp;
 		} else {
-			if( p->remain_tick < min_tick ) {
-				min_tick = (TICK16_t)p->remain_tick;
+			if( p_req->remain_tick < min_tick ) {
+				min_tick = (TICK16_t)p_req->remain_tick;
 			}
-			p->old_tick = now_tick;
-			p = p->next_list;
+			p_req = (TIMms_t*)List_getNext( &p_req->list );
 		}
 	}
-	if( TIMms_TopReq == NULL ) {
-		TIMms_TailReq = NULL;
+	if( min_tick == (uint32_t)-1 ) {
+		TIMms_NextExpire = (TICK16_t)-1;
+	} else {
+		TIMms_NextExpire = (now_tick + min_tick) & (TICK16_t)-1;
 	}
-	TIMms_setNextExpire( min_tick );
+	TIMms_setNextExpire( TIMms_NextExpire );
 	osExitCritical();
 
-	if( TIMms_TopExpire != NULL ){
+	p_temp = (TIMms_t*)List_getNext( &TIMms_Expire );
+	if( p_temp != NULL ){
 		/* タスクを起床する */
 		osMutex_giveISR( TIMms_ExpireMutex, &dispatch );
 		portEND_SWITCHING_ISR( dispatch );
