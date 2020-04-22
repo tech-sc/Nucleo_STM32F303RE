@@ -5,19 +5,21 @@
  * ミリ秒単位で要求可能なソフトウェアタイマをAPLに提供する.
  * 
  * @author      Teru
- * @date        2019/07/27
- * @version     Rev0.10
- * @copyright   2019 Emb-se.com.
+ * @date		2020/04/21
+ * @version		Rev0.20
  * 
  * @par 変更履歴:
  * - Rev0.01: 2019/06/27: 新規作成.
  * - Rev0.02: 2019/07/27: Doxygen対応.
+ * - Rev0.10: 2019/12/21: TIMER_msドライバの変更に対応.
+ * - Rev0.20: 2020/04/21: 双方向リスト管理に変更.
  * 
- * @copyright   2019 Emb-se.com.
+ * @copyright   2019-20 Emb-se.com.
  */
 #ifndef _TIMms_H_
 #define _TIMms_H_
 
+#include "ListEx.h"
 #include "TIMER_ms.h"
 
 /**
@@ -39,18 +41,20 @@
  */
 
 /// タイマカウンタレジスタ型(16bitカウンタ)
-//typedef uint16_t    TIMCNT_t;
+// typedef uint16_t    TIMCNT_t;
 
 /**
  * @brief タイマ要求データ型.
  */
 typedef struct TIMms_t {
+	/// 要求または発火リスト
+	ListHdr_t	list;
     /// 発火までの残りTICK
     int64_t     remain_tick;
     /// 発火コールバック関数.
     void   (*expire_cb)(void *hdl);
-    /// 要求または発火リスト.
-    struct TIMms_t *next_list;
+//    /// 要求または発火リスト.
+//    struct TIMms_t *next_list;
     /// 要求処理または発火処理時のTICK値.
     uint32_t    old_tick;
     /// オプション機能コード.
