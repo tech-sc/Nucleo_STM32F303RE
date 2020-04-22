@@ -14,9 +14,6 @@
 #ifndef _UART_H_
 #define _UART_H_
 
-#include "FreeRTOS.h"
-#include "semphr.h"
-
 /**
  * @page PAGE_UART UART制御.
  *

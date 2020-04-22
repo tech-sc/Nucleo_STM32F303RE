@@ -15,21 +15,34 @@
  * @addtogroup GROUP_UART
  * @{
  */
-#include "stm32f1xx_hal.h"
-#include "stm32f1xx_hal_gpio.h"
-#include "stm32f1xx_hal_rcc.h"
-#include "stm32f1xx_hal_DMA.h"
-#include "stm32f1xx_hal_UART.h"
-#include "stm32f1xx_ll_usart.h"
+#include "stm32f3xx_hal.h"
+#include "stm32f3xx_hal_gpio.h"
+#include "stm32f3xx_hal_rcc.h"
+#include "stm32f3xx_hal_DMA.h"
+#include "stm32f3xx_hal_UART.h"
+#include "stm32f3xx_ll_usart.h"
+#include "stm32f3xx_ll_rcc.h"
+#include "FreeRTOS.h"
+#include "semphr.h"
 #include "UART.h"
 
 
+#ifdef STM32F103xB
 #define UART				USART2		/**< 使用するペリフェラル */
 
 #define UART_TX_PIN			GPIO_PIN_2
 #define UART_TX_GPIO_PORT	GPIOA
 #define UART_RX_PIN			GPIO_PIN_3
 #define UART_RX_GPIO_PORT	GPIOA
+#endif
+#ifdef STM32F303xE
+#define UART				USART1		/**< 使用するペリフェラル */
+
+#define UART_TX_PIN			GPIO_PIN_4
+#define UART_TX_GPIO_PORT	GPIOC
+#define UART_RX_PIN			GPIO_PIN_5
+#define UART_RX_GPIO_PORT	GPIOC
+#endif
 
 
 /* HAL APIハンドル */
@@ -57,14 +70,10 @@ static int UART_config( void )
 {
 	GPIO_InitTypeDef	gpio_init_struct = {0};
 
-	/* Peripheral clock enable */
-	if( __HAL_RCC_USART2_IS_CLK_DISABLED() ) {
-		__HAL_RCC_USART2_CLK_ENABLE();
-	}
-	/* GPIO Ports Clock Enable */
-	if( __HAL_RCC_GPIOA_IS_CLK_DISABLED() ) {
-		__HAL_RCC_GPIOA_CLK_ENABLE();
-	}
+#ifdef STM32F103xB
+	/* Clock Enable */
+	__HAL_RCC_USART2_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
 
 	/**USART2 GPIO Configuration
 	PA2     ------> USART2_TX
@@ -96,6 +105,44 @@ static int UART_config( void )
 	__HAL_UART_ENABLE_IT( &uart_HandleStruct, UART_IT_RXNE );
 	HAL_NVIC_SetPriority( USART2_IRQn, 5, 0 );
 	HAL_NVIC_EnableIRQ( USART2_IRQn );
+#endif
+#ifdef STM32F303xE
+	/* Peripheral clock enable */
+	LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_SYSCLK);
+	/* Clock Enable */
+	__HAL_RCC_USART1_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+
+	/**USART1 GPIO Configuration
+    PC4     ------> USART1_TX
+    PC5     ------> USART1_RX
+    */
+	gpio_init_struct.Pin = UART_TX_PIN|UART_RX_PIN;
+	gpio_init_struct.Mode = GPIO_MODE_AF_PP;
+	gpio_init_struct.Pull = GPIO_NOPULL;
+	gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;
+	gpio_init_struct.Alternate = GPIO_AF7_USART1;
+	HAL_GPIO_Init(UART_TX_GPIO_PORT, &gpio_init_struct);
+
+	uart_HandleStruct.Instance = UART;
+	uart_HandleStruct.Init.BaudRate = 38400;
+	uart_HandleStruct.Init.WordLength = UART_WORDLENGTH_8B;
+	uart_HandleStruct.Init.StopBits = UART_STOPBITS_1;
+	uart_HandleStruct.Init.Parity = UART_PARITY_NONE;
+	uart_HandleStruct.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	uart_HandleStruct.Init.Mode = UART_MODE_TX_RX;
+	uart_HandleStruct.Init.OverSampling = UART_OVERSAMPLING_16;
+	uart_HandleStruct.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+	uart_HandleStruct.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+	if( HAL_UART_Init(&uart_HandleStruct) != HAL_OK) {
+		return -1;
+	}
+
+	/* USART1 interrupt Init */
+	__HAL_UART_ENABLE_IT( &uart_HandleStruct, UART_IT_RXNE );
+	HAL_NVIC_SetPriority(USART1_IRQn, 5, 0);
+	HAL_NVIC_EnableIRQ(USART1_IRQn);
+#endif
 	return 0;
 }
 
@@ -147,7 +194,12 @@ uint16_t UART_getMode( void )
 /**************************************************************************//**
  * @brief	This function handles USART2 global interrupt.
  */
+#ifdef STM32F103xB
 void USART2_IRQHandler( void )
+#endif
+#ifdef STM32F303xE
+void USART1_IRQHandler( void )
+#endif
 {
 	portBASE_TYPE	each_dispatch, dispatch;
 
