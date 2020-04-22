@@ -5,14 +5,15 @@
  * ミリ秒単位で要求可能なソフトウェアタイマをAPLに提供する.
  * 
  * @author		Teru
- * @date		2020/04/21
- * @version		Rev0.20
+ * @date		2020/04/22
+ * @version		Rev0.21
  * 
  * @par 変更履歴:
  * - Rev0.01: 2019/06/27: 新規作成.
  * - Rev0.02: 2019/07/27: Doxygen対応.
  * - Rev0.10: 2019/12/21: TIMER_msドライバの変更に対応.
  * - Rev0.20: 2020/04/21: 双方向リスト管理に変更.
+ * - Rev0.21: 2020/04/22: 発火tick値を16bit→64bitに改良.
  * 
  * @copyright   2019-20 Emb-se.com.
  */
@@ -20,12 +21,12 @@
  * @addtogroup GROUP_TIMms ミリ秒オーダータイマ機能.
  * @{
  */
-#include "TIMER_ms.h"
 #include "os.h"
 #include "ListEx.h"
+#include "TIMER_ms.h"
 #include "TIMms.h"
-
 //#include "ExtLED.h"		///計測用.
+
 
 /// タイマ要求リストポインタ
 static ListHdr_t	TIMms_Request;
@@ -34,10 +35,10 @@ static ListHdr_t	TIMms_Request;
 static ListHdr_t	TIMms_Expire;
 
 /// 次回発火tick値
-static TICK16_t		TIMms_NextExpire;
+static TICK64_t		TIMms_NextExpire;
 
 /// タイマ発火タスクを起床するための同期化変数
-static osMutex_h		TIMms_ExpireMutex;
+static osMutex_h	TIMms_ExpireMutex;
 
 /**
  * @brief ミリ秒タイマ発火処理タスク.
@@ -71,8 +72,6 @@ static void TIMms_setNextExpire( TICK16_t tick )
 {
 	/* コンペアマッチレジスタを変更する. */
 	TIMER_ms_setCompReg( tick );
-
-	TIMms_NextExpire = tick;
 }
 
 /**
@@ -91,7 +90,7 @@ void TIMms_initTimer( void )
 	/* 内部管理データ初期化 */
 	List_init( &TIMms_Request );
 	List_init( &TIMms_Expire );
-	TIMms_NextExpire = (TICK16_t)-1;	//最大値セット
+	TIMms_NextExpire.tick64 = (uint64_t)-1;	//最大値セット
 
 	/* 発火コールバック用タスクを生成する. */
 	retv = osTask_create( &TIMms_task, "TIMms", TIMms_STACKSZ/4,
@@ -118,7 +117,7 @@ void TIMms_initTimer( void )
  */
 void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_req )
 {
-	uint32_t  tmp_tick;
+	TICK64_t  tmp_tick;
 
 	configASSERT(time > 0);
 	configASSERT(expire_cb != NULL);
@@ -137,12 +136,11 @@ void *TIMms_reqTimer( int32_t time, void (*expire_cb)(void *handle), TIMms_t *p_
 	List_add( &TIMms_Request, &p_req->list );
 	osExitCritical();
 
-	tmp_tick  = p_req->old_tick;
-	tmp_tick += p_req->remain_tick;
-	tmp_tick &= 0xffff;
-	if( tmp_tick <= TIMms_NextExpire ){
-		TIMms_NextExpire = tmp_tick;
-		TIMms_setNextExpire( TIMms_NextExpire );
+	tmp_tick.tick64 = TIMER_ms_getTick64();
+	tmp_tick.tick64 += p_req->remain_tick;
+	if( tmp_tick.tick64 <= TIMms_NextExpire.tick64 ){
+		TIMms_NextExpire.tick64 = tmp_tick.tick64;
+		TIMms_setNextExpire( TIMms_NextExpire.tick32w.tick16w.lo );
 	}
 	return p_req;
 }
@@ -203,22 +201,24 @@ void TIMER_ms_expire( int over )
 			p_req = p_temp;
 		} else {
 			if( p_req->remain_tick < min_tick ) {
-				min_tick = (TICK16_t)p_req->remain_tick;
+				min_tick = p_req->remain_tick;
 			}
 			p_req = (TIMms_t*)List_getNext( &p_req->list );
 		}
 	}
-	if( min_tick == (uint32_t)-1 ) {
-		TIMms_NextExpire = (TICK16_t)-1;
-	} else {
-		TIMms_NextExpire = (now_tick + min_tick) & (TICK16_t)-1;
-	}
-	TIMms_setNextExpire( TIMms_NextExpire );
 	osExitCritical();
+
+	TIMms_NextExpire.tick64 = TIMER_ms_getTick64();
+	if( min_tick == (uint32_t)-1 ) {
+		TIMms_NextExpire.tick32w.tick16w.lo = (TICK16_t)-1;
+	} else {
+		TIMms_NextExpire.tick64 += min_tick;
+	}
+	TIMms_setNextExpire( TIMms_NextExpire.tick32w.tick16w.lo );
 
 	p_temp = (TIMms_t*)List_getNext( &TIMms_Expire );
 	if( p_temp != NULL ){
-		/* タスクを起床する */
+		/* タイマ発火処理タスクを起床する */
 		osMutex_giveISR( TIMms_ExpireMutex, &dispatch );
 		portEND_SWITCHING_ISR( dispatch );
 	}
