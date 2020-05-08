@@ -15,63 +15,58 @@
 #include "TIMms.h"
 #include "UART.h"
 
-enum {
+typedef enum {
 	TASK_A = 0,
 	TASK_B,
 	TASK_NUM
-};
-/// タイマ発火待ちハンドラ
-static osMutex_h		expire_mutex[TASK_NUM];
-static	TIMms_t			tmr_handle[TASK_NUM];
+} TASK_e;
+
+#define REPEAT_NUM		96			// =38400bps/(1+8+1)/1000ms*25ms
+static TASK_e			ExpireSW;
+static TIMms_t			TimerHandle;
+static osMutex_h		ExpireMutex[TASK_NUM];
+static const uint8_t	OutChar[TASK_NUM] = { 'A', 'B' };
 
 /**************************************************************************/
-static void tmr_expireA( void *p_handle )
+static void Survey_TimerExpire( void *p_handle )
 {
-	osMutex_give( expire_mutex[TASK_A] );
-}
-static void tmr_expireB( void *p_handle )
-{
-	osMutex_give( expire_mutex[TASK_B] );
+	if( ExpireSW == TASK_A ) {
+		ExpireSW = TASK_B;
+	} else {
+		ExpireSW = TASK_A;
+	}
+	TIMms_reqTimer( 20, &Survey_TimerExpire, &TimerHandle );
+	osMutex_give( ExpireMutex[ExpireSW] );
 }
 
 /**************************************************************************//**
  * @brief	タスク優先度調査タスク
- * @param[in]	arg		タスク起動パラメータ(='A'/'B'/'C')
+ * @param[in]	arg		タスク起動パラメータ(='A'/'B')
  */
 void SurveyTask( void *arg )
 {
-	uint32_t		wakeup_tim, now_tim;
+	int			i;
+	TASK_e		task_prm;
+	uint8_t		out_char = *(uint8_t*)arg;
 
-	switch( *(char*)arg ){
+	switch( out_char ) {
 	case 'A':
-		expire_mutex[TASK_A] = osMutex_create();
+		task_prm = TASK_A;
 		break;
 	case 'B':
-		expire_mutex[TASK_B] = osMutex_create();
+		task_prm = TASK_B;
 		break;
 	default:
 		return;
 	}
+	ExpireMutex[task_prm] = osMutex_create();
 
 	while( 1 ){
-		switch( *(char*)arg ){
-		case 'A':
-			TIMms_reqTimer( 50, &tmr_expireA, &tmr_handle[TASK_A] );
-			osMutex_take( expire_mutex[TASK_A], osBLOCKING );
-			break;
-		case 'B':
-			TIMms_reqTimer( 50, &tmr_expireB, &tmr_handle[TASK_B] );
-			osMutex_take( expire_mutex[TASK_B], osBLOCKING );
-			break;
-		default:
-			return;
-		}
+		osMutex_take( ExpireMutex[task_prm], osBLOCKING );
 
-		wakeup_tim = TICK_TO_MSEC( TIMms_getTick() );
-		do {
-			UART_putchar( *(char*)arg );
-			now_tim = TICK_TO_MSEC( TIMms_getTick() );
-		}while( (now_tim - wakeup_tim) < 20 );
+		for( i=0; i < 96; i++ ) {
+			UART_putchar( out_char );
+		}
 	}
 }
 
@@ -83,11 +78,14 @@ void SurveyTask_init( void )
 	osError		retv;
 	osTask_h	handle;
 
-	retv = osTask_create( &SurveyTask, "SurveyTaskA", SurveyA_STACKSZ/4,
-						"A", SurveyA_PRI | portPRIVILEGE_BIT, &handle );
+	retv = osTask_create( &SurveyTask, "SurveyTaskA", SurveyA_STACKSZ/4, (void*)&OutChar[TASK_A],
+						   SurveyA_PRI | portPRIVILEGE_BIT, &handle );
 	configASSERT(retv == pdPASS);
 
-	retv = osTask_create( &SurveyTask, "SurveyTaskB", SurveyB_STACKSZ/4,
-						"B", SurveyB_PRI | portPRIVILEGE_BIT, &handle );
+	retv = osTask_create( &SurveyTask, "SurveyTaskB", SurveyB_STACKSZ/4, (void*)&OutChar[TASK_B],
+						  SurveyB_PRI | portPRIVILEGE_BIT, &handle );
 	configASSERT(retv == pdPASS);
+
+	ExpireSW = TASK_A;
+	TIMms_reqTimer( 20, &Survey_TimerExpire, &TimerHandle );
 }

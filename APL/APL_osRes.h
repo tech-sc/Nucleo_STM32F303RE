@@ -63,7 +63,7 @@ enum {
 #define LOGTASK_PRI			(configMAX_PRIORITIES -2)
 #define shellTASK_PRI		(configMAX_PRIORITIES -4)
 #define APLinitTASK_PRI		(configMAX_PRIORITIES -4)
-#define SurveyA_PRI			(configMAX_PRIORITIES -3)
+#define SurveyA_PRI			(configMAX_PRIORITIES -2)
 #define SurveyB_PRI			(configMAX_PRIORITIES -3)
 
 
